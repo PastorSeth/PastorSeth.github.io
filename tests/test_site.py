@@ -173,8 +173,8 @@ class TestScaffold(unittest.TestCase):
 
     def test_exists_exact_is_case_sensitive(self):
         # macOS ignores filename case; GitHub Pages does not.
-        self.assertTrue(exists_exact("images/seth.svg"))
-        self.assertFalse(exists_exact("images/SETH.SVG"))
+        self.assertTrue(exists_exact("images/seth.jpg"))
+        self.assertFalse(exists_exact("images/SETH.JPG"))
 
     def test_external_links_safe(self):
         for a in page().find_all("a"):
@@ -211,7 +211,7 @@ class TestHero(unittest.TestCase):
         v = videos[0]
         for attr in ("muted", "loop", "playsinline", "autoplay"):
             self.assertIn(attr, v.attrs, attr)
-        self.assertEqual(v.attrs.get("poster"), "images/hero-poster.svg")
+        self.assertEqual(v.attrs.get("poster"), "images/hero-poster.jpg")
         self.assertEqual(len(v.find_all("source", src="videos/hero-preview.mp4", type="video/mp4")), 1)
 
     def test_modal_markup(self):

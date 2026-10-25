@@ -24,7 +24,7 @@ Open `index.html` and search for **`EDIT:`**. Every comment like this marks some
 
 Change the text or link right below each one. Things to swap in:
 
-- **Photo:** save a square photo as `images/seth.jpg`, then change `images/seth.svg` to `images/seth.jpg` in `index.html`.
+- **Photo:** to change it, replace `images/seth.jpg` with a new square photo of the same name.
 - **App screenshots:** tall phone screenshots work best. Replace `images/app-1.svg` and `images/app-2.svg` the same way.
 - **App link:** change `https://example.com/your-app` to your app's real address. It already opens in a new tab.
 - **Sermon thumbnails and social post images:** replace the `sermon-*.svg` and `social-*.svg` files the same way.
@@ -47,7 +47,7 @@ https://youtu.be/dQw4w9WgXcQ?si=abc123        (from YouTube's Share button)
 
 In `index.html`, replace `REPLACE_ME` in `data-video-id="REPLACE_ME"` with that ID. Until you do, tapping the video shows a friendly "Video coming soon!" message.
 
-**Optional preview clip:** the welcome card can play a short, silent loop of you. Make a 5–10 second clip with no sound, keep it under 3 MB, and save it as `videos/hero-preview.mp4`. Until you add it, the card shows `images/hero-poster.svg`. Swap that file for a real photo too, if you like.
+**Optional preview clip:** the welcome card can play a short, silent loop of you. Make a 5–10 second clip with no sound, keep it under 3 MB, and save it as `videos/hero-preview.mp4`. Until you add it, the card shows `images/hero-poster.jpg`.
 
 ### Your resume PDF
 
