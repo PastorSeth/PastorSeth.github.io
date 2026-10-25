@@ -468,6 +468,32 @@ class TestMotion(unittest.TestCase):
         self.assertIn("--bounce: cubic-bezier(.34,1.56,.64,1)", css)
 
 
+class TestScrollEffects(unittest.TestCase):
+    """Each section gets its own entrance instead of the same pop/slide everywhere."""
+
+    def setUp(self):
+        self.used = [el.attrs["data-reveal"] for el in page().find_all(data_reveal=True)]
+
+    def test_variety(self):
+        self.assertGreaterEqual(len(set(self.used)), 10, sorted(set(self.used)))
+        most = max(self.used.count(v) for v in set(self.used))
+        self.assertLessEqual(most / len(self.used), 0.25)
+
+    def test_every_effect_is_styled(self):
+        css = read_css()
+        for effect in set(self.used):
+            self.assertIn('[data-reveal="%s"]' % effect, css, effect)
+
+    def test_effect_overlays_off_for_reduced_motion(self):
+        block = _block_after(read_css(), "@media (prefers-reduced-motion: reduce)")
+        for overlay in ('[data-reveal="crt"]::after', '[data-reveal="beam"]::before',
+                        '[data-reveal="channel"] .sermon-card__thumb::after'):
+            self.assertIn(overlay, block)
+
+    def test_waits_until_partly_on_screen(self):
+        self.assertIn("intersectionRatio", read_js())
+
+
 class TestContact(unittest.TestCase):
     def test_contact(self):
         contact = page().by_id("contact")

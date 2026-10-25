@@ -1092,6 +1092,173 @@ body.menu-open { overflow: hidden; }
 .js [data-reveal="rise"]  { transform: translateY(60px); }
 .js [data-reveal].is-visible { opacity: 1; transform: none; }
 
+/* ==========================================================================
+   Scroll entrance effects: each section has its own.
+   Child entrances use fill-mode `backwards`, so once they finish, buttons and
+   cards go back to their normal press/hover behavior.
+   ========================================================================== */
+/* Section headings: a quick glitch, like the hero name */
+.js [data-reveal="glitch"].is-visible { animation: rv-glitch .8s steps(1) var(--delay, 0s) backwards; }
+.js .contact__title[data-reveal].is-visible { animation: rv-glitch .8s steps(1) backwards, title-split 4.2s steps(1) 1.6s infinite; }
+
+/* About photo: an old TV switching on */
+.js [data-reveal="crt"] { position: relative; }
+.js [data-reveal="crt"].is-visible { animation: rv-crt .7s steps(3) backwards; }
+.js [data-reveal="crt"].is-visible::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  pointer-events: none;
+  animation: rv-flash .6s steps(3) .25s both;
+}
+
+/* Text blocks: lines type in one after another; button rows get stamped on */
+.js [data-reveal="lines"], .js [data-reveal="stamps"] { opacity: 1; }
+.js [data-reveal="lines"]:not(.is-visible) > *,
+.js [data-reveal="stamps"]:not(.is-visible) > * { opacity: 0; }
+.js [data-reveal="lines"].is-visible > * { animation: rv-type .45s steps(4) backwards; }
+.js [data-reveal="stamps"].is-visible > * { animation: rv-stamp .45s var(--bounce) backwards; }
+.js [data-reveal="lines"].is-visible > :nth-child(2),
+.js [data-reveal="stamps"].is-visible > :nth-child(2) { animation-delay: .12s; }
+.js [data-reveal="lines"].is-visible > :nth-child(3),
+.js [data-reveal="stamps"].is-visible > :nth-child(3) { animation-delay: .24s; }
+.js [data-reveal="lines"].is-visible > :nth-child(4),
+.js [data-reveal="stamps"].is-visible > :nth-child(4) { animation-delay: .36s; }
+.js [data-reveal="lines"].is-visible > :nth-child(5),
+.js [data-reveal="stamps"].is-visible > :nth-child(5) { animation-delay: .48s; }
+.js [data-reveal="lines"].is-visible > :nth-child(6),
+.js [data-reveal="stamps"].is-visible > :nth-child(6) { animation-delay: .6s; }
+.js [data-reveal="lines"].is-visible > .app-spotlight__sticker { animation: rv-stamp .5s var(--bounce) .75s backwards, sticker 2.4s steps(2) 1.3s infinite; }
+
+/* Single lines of text: typed on */
+.js [data-reveal="type"].is-visible { animation: rv-type .5s steps(5) var(--delay, 0s) backwards; }
+
+/* Heart cards: flip in like stained-glass tiles, then the icon lights up */
+.js [data-reveal="flip"].is-visible { animation: rv-flip .7s steps(5) var(--delay, 0s) backwards; }
+.js [data-reveal="flip"].is-visible .heart-card__icon { animation: rv-ignite .5s steps(3) calc(var(--delay, 0s) + .6s) backwards; }
+
+/* Stats: drop in and land with a thud. The badge gets stamped on. */
+.js [data-reveal="drop"].is-visible { animation: rv-drop .7s steps(4) var(--delay, 0s) backwards; }
+.js [data-reveal="stamp"].is-visible { animation: rv-stamp .5s var(--bounce) var(--delay, 0s) backwards; }
+
+/* Timeline: cards slide in pixel-step by pixel-step, the dot lights up, bullets type in */
+.js .timeline-card[data-reveal] {
+  transition: opacity .3s steps(3), transform .6s steps(6), scale .08s steps(1), translate .3s steps(3);
+}
+.js .timeline-card.is-visible .timeline-card__dot { animation: rv-dot .6s steps(4) .3s backwards; }
+.js .timeline-card.is-visible .dates { animation: rv-stamp .4s var(--bounce) .35s backwards; }
+.js .timeline-card.is-visible li { animation: rv-type .4s steps(4) .5s backwards; }
+.js .timeline-card.is-visible li:nth-child(2) { animation-delay: .65s; }
+.js .timeline-card.is-visible li:nth-child(3) { animation-delay: .8s; }
+
+/* Work cards: dealt onto the table, each from its own angle */
+.js [data-reveal="deal"].is-visible { animation: rv-deal .65s cubic-bezier(.2,1.3,.4,1) var(--delay, 0s) backwards; }
+
+/* Education: the card unrolls, then the award is stamped on */
+.js [data-reveal="unlock"] { transform-origin: top; }
+.js [data-reveal="unlock"].is-visible { animation: rv-unlock .6s steps(5) var(--delay, 0s) backwards; }
+.js [data-reveal="unlock"].is-visible .edu-card__award { animation: rv-stamp .5s var(--bounce) calc(var(--delay, 0s) + .55s) backwards; }
+
+/* App phones: beamed up in a column of light */
+.phone--front { --tilt: -8deg; }
+.phone--back { --tilt: 9deg; }
+.js [data-reveal="beam"].is-visible::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: -40px;
+  bottom: -40px;
+  width: 140px;
+  translate: -50% 0;
+  background: linear-gradient(to right, transparent, rgba(255, 210, 63, .55), transparent);
+  pointer-events: none;
+  animation: rv-beam 1s steps(6) both;
+}
+.js [data-reveal="beam"].is-visible .phone--back { animation: rv-up .6s steps(6) .15s backwards, phone-b 7s steps(10) .75s infinite; }
+.js [data-reveal="beam"].is-visible .phone--front { animation: rv-up .6s steps(6) .3s backwards, phone-a 6s steps(10) .9s infinite; }
+
+/* Sermons: the TV changes channel to each one, through a burst of static */
+.js [data-reveal="channel"].is-visible { animation: rv-crt .55s steps(3) var(--delay, 0s) backwards; }
+.js [data-reveal="channel"].is-visible .sermon-card__thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(255, 246, 229, .55) 0 2px, rgba(5, 2, 12, .75) 2px 4px);
+  animation: rv-static .9s steps(1) calc(var(--delay, 0s) + .3s) both;
+}
+
+/* Social posts: the photos develop like a print */
+.js [data-reveal="develop"].is-visible { animation: rv-rise .5s steps(4) var(--delay, 0s) backwards; }
+.js [data-reveal="develop"].is-visible img { animation: rv-develop 1.8s steps(9) calc(var(--delay, 0s) + .2s) backwards; }
+.js [data-reveal="develop"].is-visible .social-card__badge { animation: rv-stamp .45s var(--bounce) calc(var(--delay, 0s) + .5s) backwards; }
+
+@keyframes rv-glitch {
+  0% { opacity: 0; transform: translateX(-30px) skewX(-20deg); }
+  15% { opacity: 1; transform: translateX(18px) skewX(12deg); }
+  30% { transform: translateX(-8px) skewX(0); }
+  45% { opacity: .2; }
+  60% { opacity: 1; transform: translateX(4px); }
+  75%, 100% { opacity: 1; transform: none; }
+}
+@keyframes rv-crt {
+  0% { opacity: 0; transform: scale(0, .02); }
+  30% { opacity: 1; transform: scale(1.06, .02); }
+  65% { transform: scale(1, 1.06); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes rv-flash { 0% { opacity: 0; } 25% { opacity: .9; } 100% { opacity: 0; } }
+@keyframes rv-type { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@keyframes rv-flip {
+  0% { opacity: 0; transform: perspective(700px) rotateY(95deg); }
+  60% { opacity: 1; transform: perspective(700px) rotateY(-14deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes rv-ignite { 0% { transform: scale(0) rotate(-45deg); } 70% { transform: scale(1.3) rotate(8deg); } 100% { transform: none; } }
+@keyframes rv-drop {
+  0% { opacity: 0; transform: translateY(-90px); }
+  55% { opacity: 1; transform: translateY(0) scale(1.12, .82); }
+  75% { transform: translateY(-12px) scale(.96, 1.04); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes rv-stamp {
+  0% { opacity: 0; transform: scale(2.4) rotate(-14deg); }
+  60% { opacity: 1; transform: scale(.9) rotate(3deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes rv-dot {
+  0% { transform: rotate(45deg) scale(0); }
+  60% { transform: rotate(45deg) scale(1.7); }
+  100% { transform: rotate(45deg) scale(1); }
+}
+@keyframes rv-deal {
+  0% { opacity: 0; transform: translate(var(--dx, 0px), 140px) rotate(var(--rot, -15deg)) scale(.75); }
+  70% { opacity: 1; transform: translate(0, -8px) rotate(calc(var(--rot, -15deg) * -.15)); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes rv-unlock { 0% { opacity: 0; transform: scaleY(0); } 45% { opacity: 1; transform: scaleY(1.05); } 100% { opacity: 1; transform: none; } }
+@keyframes rv-beam {
+  0% { opacity: 0; transform: scaleY(0); }
+  30% { opacity: 1; transform: scaleY(1); }
+  100% { opacity: 0; transform: scaleY(1) scaleX(.15); }
+}
+@keyframes rv-up {
+  from { opacity: 0; transform: translateY(140px) rotate(var(--tilt, 0deg)); }
+  to { opacity: 1; transform: rotate(var(--tilt, 0deg)); }
+}
+@keyframes rv-static {
+  0% { opacity: 1; transform: none; }
+  20% { transform: translateY(-3px); }
+  40% { opacity: .85; transform: translateY(2px); }
+  60% { opacity: 1; transform: none; }
+  80% { opacity: .5; }
+  100% { opacity: 0; }
+}
+@keyframes rv-develop { from { opacity: .06; transform: scale(1.08); } to { opacity: 1; transform: none; } }
+@keyframes rv-rise { from { opacity: 0; transform: translateY(44px); } to { opacity: 1; transform: none; } }
+
 /* Press + hover feedback on cards. Uses scale/translate so it never fights the reveal's transform. */
 .heart-card, .timeline-card, .work-card, .sermon-card, .social-card {
   transition: scale .08s steps(1), translate .3s steps(3);
@@ -1165,6 +1332,9 @@ body.menu-open { overflow: hidden; }
   .js [data-reveal] { opacity: 1; transform: none; }
   .timeline__line { transform: none; }
   .hero__glass { opacity: .9; }
+  .js [data-reveal="crt"]::after,
+  .js [data-reveal="beam"]::before,
+  .js [data-reveal="channel"] .sermon-card__thumb::after { display: none !important; }
 }
 
 /* ==========================================================================
@@ -1182,5 +1352,9 @@ body.menu-open { overflow: hidden; }
     text-shadow: none !important;
   }
   body { background: #fff !important; }
+  .js [data-reveal="crt"]::after,
+  .js [data-reveal="beam"]::before,
+  .js [data-reveal="channel"] .sermon-card__thumb::after { display: none !important; }
+  .js [data-reveal]:not(.is-visible) > * { opacity: 1 !important; }
   .hero { min-height: 0; }
 }

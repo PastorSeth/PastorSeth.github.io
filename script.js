@@ -130,13 +130,14 @@ function initReveal() {
   // Numbers start at 0 and count up when revealed (HTML holds the real value for no-JS visitors).
   document.querySelectorAll('[data-count]').forEach((el) => { el.textContent = '0'; });
 
+  // Wait until 15% of an element is on screen, so its entrance is actually seen.
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+      if (entry.intersectionRatio < 0.15) return;
       show(entry.target);
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.15 });
+  }, { threshold: [0, 0.15] });
   items.forEach((el) => observer.observe(el));
 }
 
