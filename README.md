@@ -11,6 +11,7 @@ A one-page, mobile-first resume and portfolio site. It's plain HTML, CSS and Jav
 | `script.js` | The menu, scroll animations, number count-up and video player. |
 | `resume.pdf` | The file visitors download from "Grab my resume". Currently a placeholder. |
 | `images/` | Placeholder pictures to swap for real ones. |
+| `fonts/` | The Old English Gothic Pixel font used for your name and headings, plus its license (`OFL.txt`, which must stay with the font). |
 | `videos/` | Where the optional welcome-card preview clip goes. |
 | `tests/` | Automated checks (see "Checking your changes" below). |
 
@@ -52,6 +53,10 @@ In `index.html`, replace `REPLACE_ME` in `data-video-id="REPLACE_ME"` with that 
 ### Your resume PDF
 
 Replace `resume.pdf` with a **web version** of your resume (keep the file name `resume.pdf`). This site is public, so leave off anything you don't want everyone to see, like your home address, phone number, or your references' contact details. Also make sure it matches the site: list the same roles, and leave off any role you left off the site.
+
+### A note on the Gothic Pixel font
+
+Your name and the big headings use the Old English Gothic Pixel font. It's missing a few punctuation marks (for example `:` `;` `/` and `·`), so keep headings to letters, numbers, spaces and simple punctuation like `'` `!` `?` `,` `.` `&`. Everything else on the page uses normal fonts and can say anything.
 
 ## Previewing on your computer
 

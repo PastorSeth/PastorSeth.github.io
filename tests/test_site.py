@@ -65,8 +65,9 @@ class TestScaffold(unittest.TestCase):
 
     def test_tokens(self):
         css = read_css()
-        for decl in ["--purple:#7B2FF7", "--coral:#FF5A5F", "--yellow:#FFD23F",
-                     "--teal:#00C2A8", "--cream:#FFF8EE", "--ink:#1A1423"]:
+        for decl in ["--night:#120A26", "--deep:#05020C", "--plum:#1C1238", "--gold:#FFD23F",
+                     "--ruby:#FF4D6D", "--sapphire:#3D7BFF", "--emerald:#2BD9A4",
+                     "--violet:#9B5CFF", "--cream:#FFF6E5"]:
             self.assertIn(decl, css.replace(" ", ""))
 
     def test_reveal_hidden_only_with_js(self):
@@ -183,12 +184,56 @@ class TestScaffold(unittest.TestCase):
                 self.assertIn("noopener", a.attrs.get("rel", ""), a.attrs["href"])
 
 
+class TestCathedralNight(unittest.TestCase):
+    """The A1 "Cathedral Night" look: stained glass, pixel crosses, CRT scanlines."""
+
+    def test_gothic_pixel_font(self):
+        css = read_css()
+        self.assertRegex(css, r"@font-face\s*\{[^}]*font-family:\s*['\"]GothicPixel['\"][^}]*"
+                              r"url\(['\"]?fonts/old-english-gothic-pixel\.ttf")
+        self.assertTrue(exists_exact("fonts/old-english-gothic-pixel.ttf"))
+        # SIL Open Font License: the license must ship with the font
+        self.assertTrue(exists_exact("fonts/OFL.txt"))
+
+    def test_no_video_game_copy(self):
+        text = page().text.lower()
+        for phrase in ["1p", "stage:", "unlocked", "level 2", "press start", "player 1", "player one"]:
+            self.assertNotIn(phrase, text)
+
+    def test_hero_strip_with_crosses(self):
+        strips = page().by_id("top").find_all(class_="hero__strip")
+        self.assertEqual(len(strips), 1)
+        self.assertIn("Student pastor", strips[0].text)
+        self.assertIn("Birmingham, AL", strips[0].text)
+        self.assertEqual(len(strips[0].find_all("svg", class_="cross")), 3)
+
+    def test_hero_window_eyebrow_and_rec_tag(self):
+        hero = page().by_id("top")
+        window = hero.find_all(class_="hero__window")
+        self.assertEqual(len(window), 1)
+        self.assertEqual(window[0].attrs.get("aria-hidden"), "true")
+        rec = hero.find_all(class_="welcome__rec")
+        self.assertEqual(len(rec), 1)
+        self.assertIn("REC · HELLO.MP4", rec[0].text)
+        self.assertIn("Hey, search team!", hero.text)
+
+    def test_crt_overlay(self):
+        crt = page().find_all(class_="crt")
+        self.assertEqual(len(crt), 1)
+        self.assertEqual(crt[0].attrs.get("aria-hidden"), "true")
+        body = _rule(read_css(), ".crt")
+        self.assertIsNotNone(body)
+        self.assertIn("repeating-linear-gradient", body)
+        self.assertRegex(body, r"pointer-events:\s*none")
+        self.assertRegex(body, r"position:\s*fixed")
+
+
 class TestHero(unittest.TestCase):
     def setUp(self):
         self.hero = page().by_id("top")
 
     def test_hero_name(self):
-        h1 = self.hero.find_all("h1", data_split=True)
+        h1 = self.hero.find_all("h1")
         self.assertEqual(len(h1), 1)
         self.assertEqual(h1[0].text, "Seth Peacock")
 

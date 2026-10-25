@@ -6,10 +6,11 @@
   <title>Seth Peacock · Student Pastor</title>
   <!-- EDIT: the description search engines and link previews show -->
   <meta name="description" content="Seth Peacock — student pastor, Birmingham native, and builder of a Bible study devotional app. Resume, sermons, and ministry portfolio.">
-  <meta name="theme-color" content="#7B2FF7">
+  <meta name="theme-color" content="#120A26">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fredoka:wght@600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap">
+  <link rel="preload" href="fonts/old-english-gothic-pixel.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script>
     document.documentElement.className = 'js';
@@ -20,7 +21,7 @@
 </head>
 <body>
   <header class="nav" id="nav">
-    <a class="nav__brand" href="#top">Seth<span>.</span></a>
+    <a class="nav__brand" href="#top" aria-label="Seth Peacock, back to top">SP</a>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -34,29 +35,23 @@
 
   <main>
     <section class="hero" id="top">
-      <div class="hero__shapes" aria-hidden="true">
-        <svg class="shape shape--star" viewBox="0 0 100 100"><path d="M50 4l12 30 32 3-24 21 7 32-27-17-27 17 7-32L6 37l32-3z"/></svg>
-        <svg class="shape shape--squiggle" viewBox="0 0 160 40"><path d="M4 20c12-16 24-16 36 0s24 16 36 0 24-16 36 0 24 16 36 0" fill="none" stroke-width="8" stroke-linecap="round"/></svg>
-        <svg class="shape shape--ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke-width="12"/></svg>
-        <svg class="shape shape--plus" viewBox="0 0 100 100"><path d="M40 8h20v32h32v20H60v32H40V60H8V40h32z"/></svg>
-        <svg class="shape shape--dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"/></svg>
-        <svg class="shape shape--spark" viewBox="0 0 100 100"><path d="M50 0c4 30 16 42 50 50-34 8-46 20-50 50-4-30-16-42-50-50 34-8 46-20 50-50z"/></svg>
+      <div class="hero__window" aria-hidden="true"><span class="hero__beam"></span></div>
+      <div class="hero__motes" aria-hidden="true"></div>
+
+      <div class="hero__strip">
+        <span>Student pastor</span>
+        <span class="hero__crosses" aria-hidden="true"><svg class="px cross" viewBox="0 0 7 10" width="11" height="15" aria-hidden="true"><path fill="currentColor" d="M2 0h3v3h2v3H5v4H2V6H0V3h2z"/></svg><svg class="px cross" viewBox="0 0 7 10" width="11" height="15" aria-hidden="true"><path fill="currentColor" d="M2 0h3v3h2v3H5v4H2V6H0V3h2z"/></svg><svg class="px cross" viewBox="0 0 7 10" width="11" height="15" aria-hidden="true"><path fill="currentColor" d="M2 0h3v3h2v3H5v4H2V6H0V3h2z"/></svg></span>
+        <span>Birmingham, AL</span>
       </div>
 
       <div class="container hero__grid">
         <div class="hero__copy">
           <!-- EDIT: the little greeting above your name -->
-          <p class="eyebrow hero__eyebrow">Hey, search team! 👋</p>
-          <h1 class="hero__name" data-split><span class="hero__first">Seth</span> <span class="hero__last">Peacock</span></h1>
+          <p class="hero__eyebrow">Hey, search team!</p>
+          <h1 class="hero__name"><span class="hero__line">Seth</span> <span class="hero__line">Peacock</span></h1>
           <!-- EDIT: your one-line tagline -->
           <p class="hero__tagline">Student pastor. Gospel-loud. Here for the next generation.</p>
-
-          <a class="hero__pill" href="#app"><span aria-hidden="true">✨</span> I built a devotional app <span class="hero__pill-arrow" aria-hidden="true">→</span></a>
-
-          <div class="hero__ctas">
-            <a class="btn btn--primary" href="#portfolio">See my work</a>
-            <a class="btn" href="resume.pdf" download>Grab my resume <span aria-hidden="true">↓</span></a>
-          </div>
+          <a class="hero__pill" href="#app"><svg class="px" viewBox="0 0 5 5" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M2 0h1v1h1v1h1v1H4v1H3v1H2V4H1V3H0V2h1V1h1z"/></svg><span>I built a devotional app</span><svg class="px" viewBox="0 0 6 5" width="14" height="12" aria-hidden="true"><path fill="currentColor" d="M3 0h1v1h1v1h1v1H5v1H4v1H3V4h1V3H0V2h4V1H3z"/></svg></a>
         </div>
 
         <div class="welcome">
@@ -65,14 +60,22 @@
             <video class="welcome__video" muted loop playsinline autoplay preload="metadata" poster="images/hero-poster.jpg" aria-hidden="true" tabindex="-1">
               <source src="videos/hero-preview.mp4" type="video/mp4">
             </video>
+            <div class="welcome__pixels" aria-hidden="true"></div>
+            <span class="welcome__rec"><span aria-hidden="true">●</span> REC · HELLO.MP4</span>
             <!-- EDIT: data-video-id = your welcome video's YouTube ID (the 11 characters after "v=") -->
             <button class="welcome__play" type="button" data-video-id="REPLACE_ME" data-video-title="A quick hello from Seth">
-              <span class="welcome__label"><span class="welcome__icon" aria-hidden="true">▶</span> Say hi!</span>
+              <span class="welcome__label"><svg class="px" viewBox="0 0 3 5" width="9" height="15" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h1v1h1v1H2v1H1v1H0z"/></svg> Say hi</span>
             </button>
           </div>
-          <span class="welcome__sticker" aria-hidden="true">60-sec<br>intro!</span>
+        </div>
+
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#portfolio">See my work</a>
+          <a class="btn" href="resume.pdf" download>Grab my resume <svg class="px" viewBox="0 0 5 6" width="10" height="12" aria-hidden="true"><path fill="currentColor" d="M2 0h1v3h2v1H4v1H3v1H2V5H1V4H0V3h2z"/></svg></a>
         </div>
       </div>
+
+      <p class="hero__scroll" aria-hidden="true"><svg class="px" viewBox="0 0 5 6" width="10" height="12" aria-hidden="true"><path fill="currentColor" d="M2 0h1v3h2v1H4v1H3v1H2V5H1V4H0V3h2z"/></svg> Meet me below <svg class="px" viewBox="0 0 5 6" width="10" height="12" aria-hidden="true"><path fill="currentColor" d="M2 0h1v3h2v1H4v1H3v1H2V5H1V4H0V3h2z"/></svg></p>
     </section>
     <section class="section about" id="about">
       <div class="container">
@@ -95,17 +98,17 @@
         <h3 class="about__subhead" data-reveal="rise">What I'm all about</h3>
         <div class="hearts">
           <article class="heart-card" data-reveal="pop" style="--delay: 0s">
-            <span class="heart-card__icon" aria-hidden="true">🔥</span>
+            <span class="heart-card__icon" aria-hidden="true"><svg class="px" viewBox="0 0 7 8" width="28" height="32" aria-hidden="true"><path fill="currentColor" d="M3 0h1v1h-1zM2 1h2v1h-2zM2 2h3v1h-3zM1 3h4v1h-4zM1 4h5v1h-5zM1 5h2v1h-2zM4 5h2v1h-2zM1 6h1v1h-1zM5 6h1v1h-1zM2 7h3v1h-3z"/></svg></span>
             <h3>Students who love God and live on mission</h3>
             <p>Teaching students to love Jesus deeply and live it out in their schools, teams, and friend groups.</p>
           </article>
           <article class="heart-card" data-reveal="pop" style="--delay: .12s">
-            <span class="heart-card__icon" aria-hidden="true">🏡</span>
+            <span class="heart-card__icon" aria-hidden="true"><svg class="px" viewBox="0 0 7 7" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M3 0h1v1h-1zM2 1h3v1h-3zM1 2h5v1h-5zM0 3h7v1h-7zM1 4h2v1h-2zM4 4h2v1h-2zM1 5h2v1h-2zM4 5h2v1h-2zM1 6h2v1h-2zM4 6h2v1h-2z"/></svg></span>
             <h3>Parents as primary disciplers</h3>
             <p>Equipping moms and dads to lead discipleship at home. I'm here to back them up, not replace them.</p>
           </article>
           <article class="heart-card" data-reveal="pop" style="--delay: .24s">
-            <span class="heart-card__icon" aria-hidden="true">🙌</span>
+            <span class="heart-card__icon" aria-hidden="true"><svg class="px" viewBox="0 0 11 7" width="33" height="21" aria-hidden="true"><path fill="currentColor" d="M1 0h3v1h-3zM7 0h3v1h-3zM1 1h3v1h-3zM7 1h3v1h-3zM1 2h3v1h-3zM7 2h3v1h-3zM0 4h5v1h-5zM6 4h5v1h-5zM0 5h5v1h-5zM6 5h5v1h-5zM0 6h5v1h-5zM6 6h5v1h-5z"/></svg></span>
             <h3>Volunteers empowered to invest in students</h3>
             <p>Casting vision and handing leaders real ownership, so every student is known by a caring adult.</p>
           </article>
@@ -116,7 +119,7 @@
           <div class="stat" data-reveal="pop" style="--delay: 0s"><span class="stat__num" data-count="2">2</span><span class="stat__label">Degrees</span></div>
           <div class="stat" data-reveal="pop" style="--delay: .1s"><span class="stat__num" data-count="2">2</span><span class="stat__label">Campuses launched</span></div>
           <div class="stat" data-reveal="pop" style="--delay: .2s"><span class="stat__num" data-count="4">4</span><span class="stat__label">Churches served</span></div>
-          <div class="stat stat--badge" data-reveal="pop" style="--delay: .3s"><span class="stat__num" aria-hidden="true">🎓</span><span class="stat__label">Summa Cum Laude</span></div>
+          <div class="stat stat--badge" data-reveal="pop" style="--delay: .3s"><span class="stat__num" aria-hidden="true"><svg class="px" viewBox="0 0 5 5" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M2 0h1v1h1v1h1v1H4v1H3v1H2V4H1V3H0V2h1V1h1z"/></svg></span><span class="stat__label">Summa Cum Laude</span></div>
         </div>
       </div>
 
@@ -213,12 +216,12 @@
           <div class="edu-card" data-reveal="left">
             <p class="edu-card__degree">M.A. Church Leadership</p>
             <p class="edu-card__school">Southern Baptist Theological Seminary · May 2024</p>
-            <span class="edu-card__award">🏆 Rice-Judson Scholarship Award</span>
+            <span class="edu-card__award">Rice-Judson Scholarship Award</span>
           </div>
           <div class="edu-card" data-reveal="right">
             <p class="edu-card__degree">B.S. Worship Leadership</p>
             <p class="edu-card__school">University of Mobile · May 2017 · Emphasis in Worship Technology</p>
-            <span class="edu-card__award">🎓 Summa Cum Laude</span>
+            <span class="edu-card__award">Summa Cum Laude</span>
           </div>
         </div>
       </div>
@@ -244,9 +247,9 @@
             <!-- EDIT: what the app does, who it's for, and why you built it -->
             <p class="app-spotlight__desc">I designed and built this app to help students and families dig into God's Word every day, with devotionals and Bible study in one place.</p>
             <ul class="app-spotlight__chips">
-              <li>📖 Bible study</li>
-              <li>🙏 Daily devotionals</li>
-              <li>🛠️ Designed &amp; built by me</li>
+              <li>Bible study</li>
+              <li>Daily devotionals</li>
+              <li>Designed &amp; built by me</li>
             </ul>
             <!-- EDIT: the link to your app -->
             <a class="btn btn--app" href="https://example.com/your-app" target="_blank" rel="noopener">Open the app <span class="btn--app__arrow" aria-hidden="true">↗</span></a>
@@ -262,7 +265,7 @@
           <button class="sermon-card" type="button" data-video-id="REPLACE_ME" data-video-title="Your sermon title" data-reveal="pop" style="--delay: 0.0s">
             <span class="sermon-card__thumb">
               <img src="images/sermon-1.svg" alt="Sermon thumbnail: Your sermon title" width="640" height="360" loading="lazy">
-              <span class="sermon-card__play" aria-hidden="true">▶</span>
+              <span class="sermon-card__play" aria-hidden="true"><svg class="px" viewBox="0 0 3 5" width="9" height="15" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h1v1h1v1H2v1H1v1H0z"/></svg></span>
             </span>
             <span class="sermon-card__title">Your sermon title</span>
             <span class="sermon-card__series">Series name · Wednesday students</span>
@@ -271,7 +274,7 @@
           <button class="sermon-card" type="button" data-video-id="REPLACE_ME" data-video-title="Your sermon title" data-reveal="pop" style="--delay: 0.1s">
             <span class="sermon-card__thumb">
               <img src="images/sermon-2.svg" alt="Sermon thumbnail: Your sermon title" width="640" height="360" loading="lazy">
-              <span class="sermon-card__play" aria-hidden="true">▶</span>
+              <span class="sermon-card__play" aria-hidden="true"><svg class="px" viewBox="0 0 3 5" width="9" height="15" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h1v1h1v1H2v1H1v1H0z"/></svg></span>
             </span>
             <span class="sermon-card__title">Your sermon title</span>
             <span class="sermon-card__series">Series name · Sunday students</span>
@@ -280,7 +283,7 @@
           <button class="sermon-card" type="button" data-video-id="REPLACE_ME" data-video-title="Your sermon title" data-reveal="pop" style="--delay: 0.2s">
             <span class="sermon-card__thumb">
               <img src="images/sermon-3.svg" alt="Sermon thumbnail: Your sermon title" width="640" height="360" loading="lazy">
-              <span class="sermon-card__play" aria-hidden="true">▶</span>
+              <span class="sermon-card__play" aria-hidden="true"><svg class="px" viewBox="0 0 3 5" width="9" height="15" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h1v1h1v1H2v1H1v1H0z"/></svg></span>
             </span>
             <span class="sermon-card__title">Your sermon title</span>
             <span class="sermon-card__series">Series name · Main service</span>
@@ -320,8 +323,8 @@
         <!-- EDIT: your closing invitation -->
         <p class="contact__lead" data-reveal="rise">If your church is looking for a student pastor who loves Jesus, students, and families, I'd love to talk.</p>
         <div class="contact__actions" data-reveal="rise">
-          <a class="btn btn--primary contact__email" href="mailto:sethlp114@gmail.com"><span aria-hidden="true">✉️</span> sethlp114@gmail.com</a>
-          <a class="btn" href="resume.pdf" download>Grab my resume <span aria-hidden="true">↓</span></a>
+          <a class="btn btn--primary contact__email" href="mailto:sethlp114@gmail.com"><svg class="px" viewBox="0 0 7 5" width="21" height="15" aria-hidden="true"><path fill="currentColor" d="M0 0h7v1h-7zM0 1h2v1h-2zM5 1h2v1h-2zM0 2h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM0 3h1v1h-1zM3 3h1v1h-1zM6 3h1v1h-1zM0 4h7v1h-7z"/></svg> sethlp114@gmail.com</a>
+          <a class="btn" href="resume.pdf" download>Grab my resume <svg class="px" viewBox="0 0 5 6" width="10" height="12" aria-hidden="true"><path fill="currentColor" d="M2 0h1v3h2v1H4v1H3v1H2V5H1V4H0V3h2z"/></svg></a>
         </div>
         <p class="contact__refs">References available on request.</p>
         <!-- EDIT: links to your social profiles -->
@@ -335,8 +338,10 @@
   </main>
 
   <footer class="footer">
-    <p>© <span class="footer__year">2026</span> Seth Peacock · Made with <span aria-hidden="true">❤️</span><span class="visually-hidden">love</span> in Birmingham</p>
+    <p>© <span class="footer__year">2026</span> Seth Peacock <svg class="px cross" viewBox="0 0 7 10" width="11" height="15" aria-hidden="true"><path fill="currentColor" d="M2 0h3v3h2v3H5v4H2V6H0V3h2z"/></svg> Birmingham, AL</p>
   </footer>
+
+  <div class="crt" aria-hidden="true"></div>
 
   <dialog class="video-modal" id="video-modal" aria-label="Video player">
     <div class="video-modal__inner">

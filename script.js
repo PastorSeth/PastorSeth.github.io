@@ -88,35 +88,6 @@ function initVideoModal() {
 /* ---------- Motion ---------- */
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Wrap each letter of the hero name so CSS can drop them in one by one.
-function splitLetters(el) {
-  el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
-  let i = 0;
-  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-  const textNodes = [];
-  while (walker.nextNode()) textNodes.push(walker.currentNode);
-
-  textNodes.forEach((node) => {
-    const frag = document.createDocumentFragment();
-    node.textContent.split(/(\s+)/).forEach((part) => {
-      if (!part) return;
-      if (/^\s+$/.test(part)) { frag.append(document.createTextNode(' ')); return; }
-      const word = document.createElement('span');
-      word.className = 'word';
-      word.setAttribute('aria-hidden', 'true');
-      [...part].forEach((ch) => {
-        const span = document.createElement('span');
-        span.className = 'char';
-        span.style.setProperty('--i', i++);
-        span.textContent = ch;
-        word.append(span);
-      });
-      frag.append(word);
-    });
-    node.replaceWith(frag);
-  });
-}
-
 function countUp(el) {
   if (el.dataset.counted) return;
   el.dataset.counted = 'true';
@@ -189,9 +160,50 @@ function initTimelineLine() {
   update();
 }
 
-function initHeroName() {
-  const heroName = document.querySelector('[data-split]');
-  if (heroName && !prefersReducedMotion) splitLetters(heroName);
+// Hero art: the stained-glass window, drifting specks of light, and the photo's block-by-block reveal.
+function initHeroArt() {
+  const jewels = ['var(--gold)', 'var(--ruby)', 'var(--sapphire)', 'var(--emerald)', 'var(--violet)'];
+
+  const glass = document.querySelector('.hero__window');
+  if (glass) {
+    const cells = document.createDocumentFragment();
+    for (let r = 0; r < 13; r++) {
+      for (let c = 0; c < 10; c++) {
+        const cell = document.createElement('span');
+        cell.className = 'hero__glass';
+        cell.style.background = jewels[Math.floor(Math.abs(c - 4.5) + Math.abs(r - 5)) % jewels.length];
+        cell.style.setProperty('--d', (((r * 7 + c * 13) % 23) * 0.05 + 0.15).toFixed(2) + 's');
+        cells.append(cell);
+      }
+    }
+    glass.prepend(cells);
+  }
+
+  if (prefersReducedMotion) return;
+
+  const motes = document.querySelector('.hero__motes');
+  if (motes) {
+    for (let i = 0; i < 14; i++) {
+      const mote = document.createElement('span');
+      const size = 4 + (i % 3) * 2;
+      mote.className = 'mote';
+      mote.style.left = ((i * 41) % 96) + 2 + '%';
+      mote.style.width = mote.style.height = size + 'px';
+      mote.style.background = jewels[i % 4];
+      mote.style.animationDuration = (7 + (i % 5) * 1.3).toFixed(1) + 's';
+      mote.style.animationDelay = ((i * 0.71) % 7).toFixed(2) + 's';
+      motes.append(mote);
+    }
+  }
+
+  const pixels = document.querySelector('.welcome__pixels');
+  if (pixels) {
+    for (let i = 0; i < 48; i++) {
+      const px = document.createElement('span');
+      px.style.setProperty('--d', (((i * 29) % 48) * 0.025 + 1.4).toFixed(3) + 's');
+      pixels.append(px);
+    }
+  }
 }
 
 function initFooterYear() {
@@ -203,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   window.siteReady = true;
   // Each extra runs on its own, so one broken piece (say, an edited-out menu) can't stop the rest.
-  [initNav, initVideoModal, initHeroName, initTimelineLine, initFooterYear].forEach((init) => {
+  [initNav, initVideoModal, initHeroArt, initTimelineLine, initFooterYear].forEach((init) => {
     try { init(); } catch (err) { console.error(err); }
   });
 });
