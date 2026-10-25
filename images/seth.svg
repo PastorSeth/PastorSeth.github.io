@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#00C2A8"/>
+  <circle cx="200" cy="160" r="78" fill="#FFD23F" stroke="#1A1423" stroke-width="8"/>
+  <path d="M70 400c10-90 66-140 130-140s120 50 130 140z" fill="#7B2FF7" stroke="#1A1423" stroke-width="8"/>
+  <circle cx="174" cy="150" r="9" fill="#1A1423"/>
+  <circle cx="226" cy="150" r="9" fill="#1A1423"/>
+  <path d="M170 186q30 26 60 0" fill="none" stroke="#1A1423" stroke-width="8" stroke-linecap="round"/>
+  <text x="200" y="350" text-anchor="middle" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="700" font-size="26" fill="#FFF8EE">Your photo here</text>
+</svg>

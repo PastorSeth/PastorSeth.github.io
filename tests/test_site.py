@@ -1,0 +1,455 @@
+import hashlib
+import re
+import subprocess
+import unittest
+
+from sitecheck import ROOT, Page, css_rules, exists_exact, read_css, read_js
+
+# Words that must never be published anywhere in the repo, stored as SHA-256 so the
+# word itself never appears in a tracked file (including this one).
+FORBIDDEN_WORD_HASHES = {"0188eaa432b3f6d6630f9daaf63ec361f32af168dfc8c21a38b7879b1ad71bac"}
+
+
+def _forbidden_words_in(text):
+    return {w for w in set(re.findall(r"[a-z]+", text.lower()))
+            if hashlib.sha256(w.encode()).hexdigest() in FORBIDDEN_WORD_HASHES}
+
+
+def _hex_to_rgb(value):
+    value = value.lstrip("#")
+    if len(value) == 3:
+        value = "".join(c * 2 for c in value)
+    return tuple(int(value[i:i + 2], 16) / 255 for i in (0, 2, 4))
+
+
+def _luminance(rgb):
+    lin = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+
+
+def contrast(a, b):
+    la, lb = sorted((_luminance(_hex_to_rgb(a)), _luminance(_hex_to_rgb(b))), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
+
+_page = None
+
+
+def page():
+    global _page
+    if _page is None:
+        _page = Page.load("index.html")
+    return _page
+
+
+class TestScaffold(unittest.TestCase):
+    def test_meta(self):
+        p = page()
+        viewport = p.find_all("meta", name="viewport")
+        self.assertEqual(len(viewport), 1)
+        self.assertEqual(viewport[0].attrs["content"], "width=device-width, initial-scale=1")
+        self.assertEqual(p.find_all("title")[0].text, "Seth Peacock · Student Pastor")
+        html = p.find_all("html")[0]
+        self.assertEqual(html.attrs.get("lang"), "en")
+        self.assertEqual(html.attrs.get("class"), "no-js")
+
+    def test_sections_exist(self):
+        for section_id in ["top", "about", "experience", "portfolio", "contact"]:
+            self.assertIsNotNone(page().by_id(section_id), section_id)
+
+    def test_nav_anchors_resolve(self):
+        p = page()
+        for a in p.find_all("a"):
+            href = a.attrs.get("href", "")
+            if href.startswith("#") and href != "#":
+                self.assertIsNotNone(p.by_id(href[1:]), href)
+
+    def test_tokens(self):
+        css = read_css()
+        for decl in ["--purple:#7B2FF7", "--coral:#FF5A5F", "--yellow:#FFD23F",
+                     "--teal:#00C2A8", "--cream:#FFF8EE", "--ink:#1A1423"]:
+            self.assertIn(decl, css.replace(" ", ""))
+
+    def test_reveal_hidden_only_with_js(self):
+        hiding = 0
+        for selectors, body in css_rules(read_css()):
+            if re.search(r"opacity:\s*0(?![.\d])", body):
+                for sel in selectors:
+                    if "[data-reveal" in sel:
+                        hiding += 1
+                        self.assertTrue(sel.startswith(".js "), sel)
+        self.assertGreater(hiding, 0, "expected at least one hidden reveal state")
+
+    def test_no_forbidden_content(self):
+        p = page()
+        self.assertEqual(_forbidden_words_in(p.raw), set())
+        self.assertIsNone(re.search(r"\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}", p.text))
+
+    def test_nav_does_not_trap_fixed_menu(self):
+        # filter/backdrop-filter/transform on .nav would make the "fixed" mobile menu
+        # size itself to the header instead of the whole screen.
+        for selectors, body in css_rules(read_css()):
+            if ".nav" in selectors:
+                self.assertNotRegex(body, r"(^|[;\s])(-webkit-)?(backdrop-)?filter\s*:|(^|[;\s])transform\s*:")
+
+    def test_main_clips_horizontal_overflow(self):
+        # Reveal start states slide content sideways (translateX(±60px)). Without clipping,
+        # mobile browsers widen the layout viewport and zoom the whole page out.
+        body = None
+        for selectors, rule in css_rules(read_css()):
+            if "main" in selectors:
+                body = rule
+        self.assertIsNotNone(body, "expected a `main` rule")
+        self.assertRegex(body, r"overflow-x:\s*clip")
+
+    def test_no_forbidden_words_in_tracked_files(self):
+        # GitHub Pages serves (and GitHub shows) every tracked file, not just index.html.
+        files = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True,
+                               text=True, check=True).stdout.split()
+        self.assertTrue(files)
+        for name in files:
+            data = (ROOT / name).read_bytes()
+            if b"\0" in data:
+                continue
+            self.assertEqual(_forbidden_words_in(data.decode("utf-8", "ignore")), set(), name)
+
+    def test_js_failure_fallback(self):
+        # If script.js is blocked, 404s, or throws, the page must not stay hidden.
+        inline = " ".join(sc for sc in re.findall(r"<script>(.*?)</script>", page().raw, re.S))
+        self.assertIn("setTimeout", inline)
+        self.assertIn("siteReady", inline)
+        js = read_js()
+        boot = js[js.index("document.addEventListener('DOMContentLoaded'"):]
+        self.assertLess(boot.index("initReveal()"), boot.index("window.siteReady = true"))
+        self.assertLess(boot.index("window.siteReady = true"), boot.index("initNav"))
+        self.assertIn("try {", boot)
+
+    def test_text_contrast(self):
+        # Any rule that sets both a background and a text color must meet WCAG AA (4.5:1).
+        css = read_css()
+        tokens = dict(re.findall(r"(--[a-z]+):\s*(#[0-9A-Fa-f]{3,6})", css))
+        large_or_decorative = {".welcome__label", ".welcome__icon"}
+
+        def resolve(value):
+            value = value.strip()
+            m = re.fullmatch(r"var\((--[a-z]+)\)", value)
+            if m:
+                return tokens.get(m.group(1))
+            return value if re.fullmatch(r"#[0-9A-Fa-f]{3,6}", value) else None
+
+        checked = 0
+        for selectors, body in css_rules(css):
+            bg = re.search(r"(?:^|;|\s)background(?:-color)?:\s*([^;]+);", body)
+            fg = re.search(r"(?:^|;|\s)color:\s*([^;]+);", body)
+            if not (bg and fg) or set(selectors) & large_or_decorative:
+                continue
+            b, f = resolve(bg.group(1)), resolve(fg.group(1))
+            if not (b and f):
+                continue
+            checked += 1
+            self.assertGreaterEqual(round(contrast(b, f), 2), 4.5, f"{selectors}: {f} on {b}")
+        self.assertGreater(checked, 10)
+
+    def test_overflow_fallback_for_older_safari(self):
+        # `clip` needs Safari 16+; `hidden` first keeps older iPhones from zooming out.
+        for selectors, body in css_rules(read_css()):
+            if "main" in selectors:
+                self.assertRegex(" ".join(body.split()), r"overflow-x:\s*hidden;.*overflow-x:\s*clip")
+                return
+        self.fail("no main rule")
+
+    def test_print_shows_everything(self):
+        block = _block_after(read_css(), "@media print")
+        rules = {s: " ".join(b.split()) for sels, b in css_rules(block) for s in sels}
+        self.assertRegex(rules.get(".js [data-reveal]", ""), r"opacity:\s*1")
+        self.assertRegex(rules.get(".nav", ""), r"display:\s*none")
+
+    def test_video_modal_fits_short_screens(self):
+        # Landscape phones: the 16:9 player must be limited by height too.
+        for selectors, body in css_rules(read_css()):
+            if ".video-modal" in selectors and "width" in body:
+                self.assertRegex(body, r"width:[^;]*vh")
+                return
+        self.fail("no .video-modal width rule")
+
+    def test_exists_exact_is_case_sensitive(self):
+        # macOS ignores filename case; GitHub Pages does not.
+        self.assertTrue(exists_exact("images/seth.svg"))
+        self.assertFalse(exists_exact("images/SETH.SVG"))
+
+    def test_external_links_safe(self):
+        for a in page().find_all("a"):
+            if a.attrs.get("href", "").startswith("http"):
+                self.assertEqual(a.attrs.get("target"), "_blank", a.attrs["href"])
+                self.assertIn("noopener", a.attrs.get("rel", ""), a.attrs["href"])
+
+
+class TestHero(unittest.TestCase):
+    def setUp(self):
+        self.hero = page().by_id("top")
+
+    def test_hero_name(self):
+        h1 = self.hero.find_all("h1", data_split=True)
+        self.assertEqual(len(h1), 1)
+        self.assertEqual(h1[0].text, "Seth Peacock")
+
+    def test_hero_ctas(self):
+        work = [a for a in self.hero.find_all("a", href="#portfolio") if "See my work" in a.text]
+        resume = [a for a in self.hero.find_all("a", href="resume.pdf", download=True)
+                  if "Grab my resume" in a.text]
+        self.assertEqual(len(work), 1)
+        self.assertEqual(len(resume), 1)
+
+    def test_app_pill(self):
+        pills = [a for a in self.hero.find_all("a", href="#app") if "I built a devotional app" in a.text]
+        self.assertEqual(len(pills), 1)
+
+    def test_welcome_card(self):
+        buttons = [b for b in self.hero.find_all("button", data_video_id=True) if "Say hi" in b.text]
+        self.assertEqual(len(buttons), 1)
+        videos = self.hero.find_all("video")
+        self.assertEqual(len(videos), 1)
+        v = videos[0]
+        for attr in ("muted", "loop", "playsinline", "autoplay"):
+            self.assertIn(attr, v.attrs, attr)
+        self.assertEqual(v.attrs.get("poster"), "images/hero-poster.svg")
+        self.assertEqual(len(v.find_all("source", src="videos/hero-preview.mp4", type="video/mp4")), 1)
+
+    def test_modal_markup(self):
+        dialogs = page().find_all("dialog", id="video-modal")
+        self.assertEqual(len(dialogs), 1)
+        d = dialogs[0]
+        self.assertTrue(d.attrs.get("aria-label"))
+        self.assertEqual(len(d.find_all(class_="video-frame")), 1)
+        self.assertEqual(len(d.find_all("button", class_="video-close", aria_label="Close video")), 1)
+
+
+class TestAbout(unittest.TestCase):
+    def setUp(self):
+        self.about = page().by_id("about")
+
+    def test_heart_cards(self):
+        cards = self.about.find_all(class_="heart-card")
+        self.assertEqual(len(cards), 3)
+        titles = [c.find_all("h3")[0].text for c in cards]
+        self.assertEqual(titles, [
+            "Students who love God and live on mission",
+            "Parents as primary disciplers",
+            "Volunteers empowered to invest in students",
+        ])
+
+    def test_bio_facts(self):
+        self.assertIn("Birmingham", self.about.text)
+        imgs = self.about.find_all("img")
+        self.assertGreaterEqual(len(imgs), 1)
+        for img in imgs:
+            self.assertTrue(img.attrs.get("alt"))
+
+    def test_stats(self):
+        stats = self.about.find_all(class_="stat")
+        counted = [s for s in stats if "data-count" in s.attrs or s.find_all(data_count=True)]
+
+        def count_of(s):
+            if "data-count" in s.attrs:
+                return s.attrs["data-count"]
+            return s.find_all(data_count=True)[0].attrs["data-count"]
+
+        self.assertEqual([count_of(s) for s in counted], ["2", "2", "4"])
+        labels = [s.find_all(class_="stat__label")[0].text for s in counted]
+        self.assertEqual(labels, ["Degrees", "Campuses launched", "Churches served"])
+        uncounted = [s for s in stats if s not in counted]
+        self.assertEqual(len(uncounted), 1)
+        self.assertIn("Summa Cum Laude", uncounted[0].text)
+
+    def test_marquee_a11y(self):
+        marquees = page().find_all(class_="marquee")
+        self.assertEqual(len(marquees), 1)
+        m = marquees[0]
+        self.assertEqual(m.attrs.get("aria-hidden"), "true")
+        self.assertEqual(m.text.count("Discipleship"), 2)
+
+
+class TestExperience(unittest.TestCase):
+    def setUp(self):
+        self.cards = page().by_id("experience").find_all(class_="timeline-card")
+
+    def test_ministry_roles(self):
+        self.assertEqual([c.find_all("h3")[0].text for c in self.cards], [
+            "Student Pastor", "Ministry Resident",
+            "Seminary + Pastoral Apprenticeship", "Director of Worship Media",
+        ])
+        self.assertEqual([c.find_all(class_="dates")[0].text for c in self.cards], [
+            "Feb 2024 – Aug 2025", "Aug 2023 – Feb 2024",
+            "Jan 2020 – May 2024", "Jul 2017 – Oct 2019",
+        ])
+        places = ["Parkway Baptist Church", "Warren Baptist Church",
+                  "Southern Baptist Theological Seminary", "Cottage Hill Baptist Church"]
+        for card, place in zip(self.cards, places):
+            self.assertIn(place, card.text)
+            self.assertIn(len(card.find_all("li")), (2, 3), place)
+
+    def test_parkway_highlights(self):
+        self.assertIn("Parenting with Purpose", self.cards[0].text)
+        self.assertIn("Encounter WKND", self.cards[0].text)
+
+    def test_work_cards(self):
+        work = page().by_id("experience").find_all(class_="work-card")
+        expected = [("Peacock Insurance", "Jan 2025 – Present"),
+                    ("All American Chimney Service", "Jan 2022 – May 2023"),
+                    ("Chick-fil-A", "May 2021 – Jan 2022"),
+                    ("UPS", "Oct 2019 – May 2021")]
+        self.assertEqual(len(work), len(expected))
+        for card, (company, dates) in zip(work, expected):
+            self.assertIn(company, card.text)
+            self.assertIn(dates, card.text)
+
+    def test_education(self):
+        edu = [c.text for c in page().by_id("experience").find_all(class_="edu-card")]
+        self.assertEqual(len(edu), 2)
+        self.assertIn("M.A. Church Leadership", edu[0])
+        self.assertIn("Rice-Judson Scholarship Award", edu[0])
+        self.assertIn("B.S. Worship Leadership", edu[1])
+        self.assertIn("Summa Cum Laude", edu[1])
+        self.assertNotIn("Suma ", page().raw)
+
+    def test_alternating_reveal(self):
+        self.assertEqual([c.attrs.get("data-reveal") for c in self.cards],
+                         ["left", "right", "left", "right"])
+
+
+class TestPortfolio(unittest.TestCase):
+    def setUp(self):
+        self.portfolio = page().by_id("portfolio")
+        self.app = page().by_id("app")
+
+    def test_app_first_and_highlighted(self):
+        kids = self.portfolio.children
+        self.assertTrue(kids[0].find_all("h2"), "portfolio should open with its heading")
+        self.assertEqual(kids[1].attrs.get("id"), "app")
+        self.assertIn("Built by me", self.app.text)
+
+    def test_app_link(self):
+        links = self.app.find_all("a", class_="btn--app")
+        self.assertEqual(len(links), 1)
+        a = links[0]
+        self.assertIn("Open the app", a.text)
+        self.assertIn("↗", a.text)
+        self.assertEqual(a.attrs.get("target"), "_blank")
+        self.assertIn("noopener", a.attrs.get("rel", ""))
+        self.assertTrue(a.attrs.get("href", "").startswith("http"))
+
+    def test_sermon_cards(self):
+        tracks = self.portfolio.find_all(class_="sermon-track")
+        self.assertEqual(len(tracks), 1)
+        cards = tracks[0].find_all("button", class_="sermon-card", data_video_id=True, data_video_title=True)
+        self.assertGreaterEqual(len(cards), 3)
+        for card in cards:
+            imgs = card.find_all("img")
+            self.assertEqual(len(imgs), 1)
+            self.assertTrue(imgs[0].attrs.get("alt"))
+
+    def test_video_ids_valid(self):
+        ids = [el.attrs["data-video-id"] for el in page().find_all(data_video_id=True)]
+        self.assertGreaterEqual(len(ids), 4)
+        for vid in ids:
+            self.assertTrue(vid == "REPLACE_ME" or re.fullmatch(r"[A-Za-z0-9_-]{11}", vid), vid)
+
+    def test_social_cards(self):
+        cards = self.portfolio.find_all("a", class_="social-card")
+        self.assertGreaterEqual(len(cards), 3)
+        for card in cards:
+            self.assertIn(card.attrs.get("data-platform"), {"instagram", "tiktok", "facebook"})
+            self.assertEqual(card.attrs.get("target"), "_blank")
+            self.assertIn("noopener", card.attrs.get("rel", ""))
+            imgs = card.find_all("img")
+            self.assertEqual(len(imgs), 1)
+            self.assertTrue(imgs[0].attrs.get("alt"))
+
+
+def _block_after(css, marker):
+    """Return the text inside the braces that follow `marker`."""
+    start = css.index(marker)
+    open_at = css.index("{", start)
+    depth = 0
+    for i in range(open_at, len(css)):
+        if css[i] == "{":
+            depth += 1
+        elif css[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return css[open_at + 1:i]
+    raise AssertionError("unbalanced braces after " + marker)
+
+
+def _rule(css, selector):
+    for selectors, body in css_rules(css):
+        if selector in selectors:
+            return " ".join(body.split())
+    return None
+
+
+class TestMotion(unittest.TestCase):
+    def test_reduced_motion_block(self):
+        css = read_css()
+        block = _block_after(css, "@media (prefers-reduced-motion: reduce)")
+        self.assertRegex(block, r"animation:\s*none")
+        reveal_rules = [" ".join(body.split()) for sels, body in css_rules(block)
+                        if any("[data-reveal]" in s for s in sels)]
+        self.assertTrue(any(re.search(r"opacity:\s*1", b) and re.search(r"transform:\s*none", b)
+                            for b in reveal_rules), reveal_rules)
+
+    def test_js_guards(self):
+        js = read_js()
+        self.assertIn("matchMedia('(prefers-reduced-motion: reduce)')", js)
+        self.assertIn("IntersectionObserver", js)
+        self.assertIn("'IntersectionObserver' in window", js)
+
+    def test_reveal_variants(self):
+        css = read_css()
+        expected = {
+            '.js [data-reveal="pop"]': r"scale\(\.6\).*rotate\(",
+            '.js [data-reveal="left"]': r"translateX\(-60px\)",
+            '.js [data-reveal="right"]': r"translateX\(60px\)",
+            '.js [data-reveal="rise"]': r"translateY\(60px\)",
+        }
+        for selector, pattern in expected.items():
+            body = _rule(css, selector)
+            self.assertIsNotNone(body, selector)
+            self.assertRegex(body, pattern, selector)
+        visible = _rule(css, ".js [data-reveal].is-visible")
+        self.assertRegex(visible, r"opacity:\s*1")
+        self.assertRegex(visible, r"transform:\s*none")
+        base = _rule(css, ".js [data-reveal]")
+        self.assertRegex(base, r"transition:.*var\(--bounce\)")
+        self.assertIn("--bounce: cubic-bezier(.34,1.56,.64,1)", css)
+
+
+class TestContact(unittest.TestCase):
+    def test_contact(self):
+        contact = page().by_id("contact")
+        self.assertEqual(len(contact.find_all("a", href="mailto:sethlp114@gmail.com")), 1)
+        self.assertEqual(len(contact.find_all("a", href="resume.pdf", download=True)), 1)
+        self.assertIn("References available on request", contact.text)
+        self.assertIn("Let's do ministry together", contact.text)
+
+    def test_assets_exist(self):
+        optional = {"videos/hero-preview.mp4"}
+        for el in page().find_all():
+            for attr in ("src", "poster", "href"):
+                ref = el.attrs.get(attr)
+                if not ref or ref.startswith(("#", "http", "mailto:")) or ref in optional:
+                    continue
+                self.assertTrue(exists_exact(ref), f"{el.tag} {attr}={ref} (check capitals too)")
+
+    def test_edit_markers(self):
+        self.assertGreaterEqual(page().raw.count("<!-- EDIT:"), 12)
+
+    def test_lazy_images(self):
+        hero = page().by_id("top")
+        hero_imgs = set(map(id, hero.find_all("img")))
+        for img in page().find_all("img"):
+            if id(img) not in hero_imgs:
+                self.assertEqual(img.attrs.get("loading"), "lazy", img.attrs.get("src"))
+
+
+if __name__ == "__main__":
+    unittest.main()

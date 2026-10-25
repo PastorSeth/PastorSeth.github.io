@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seth Peacock · Student Pastor</title>
+  <!-- EDIT: the description search engines and link previews show -->
+  <meta name="description" content="Seth Peacock — student pastor, Birmingham native, and builder of a Bible study devotional app. Resume, sermons, and ministry portfolio.">
+  <meta name="theme-color" content="#7B2FF7">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fredoka:wght@600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    document.documentElement.className = 'js';
+    // If script.js is blocked, missing, or crashes, show everything after 3 seconds anyway.
+    setTimeout(function () { if (!window.siteReady) document.documentElement.className = 'no-js'; }, 3000);
+  </script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top">Seth<span>.</span></a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav__menu" id="nav-menu" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero__shapes" aria-hidden="true">
+        <svg class="shape shape--star" viewBox="0 0 100 100"><path d="M50 4l12 30 32 3-24 21 7 32-27-17-27 17 7-32L6 37l32-3z"/></svg>
+        <svg class="shape shape--squiggle" viewBox="0 0 160 40"><path d="M4 20c12-16 24-16 36 0s24 16 36 0 24-16 36 0 24 16 36 0" fill="none" stroke-width="8" stroke-linecap="round"/></svg>
+        <svg class="shape shape--ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke-width="12"/></svg>
+        <svg class="shape shape--plus" viewBox="0 0 100 100"><path d="M40 8h20v32h32v20H60v32H40V60H8V40h32z"/></svg>
+        <svg class="shape shape--dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"/></svg>
+        <svg class="shape shape--spark" viewBox="0 0 100 100"><path d="M50 0c4 30 16 42 50 50-34 8-46 20-50 50-4-30-16-42-50-50 34-8 46-20 50-50z"/></svg>
+      </div>
+
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <!-- EDIT: the little greeting above your name -->
+          <p class="eyebrow hero__eyebrow">Hey, search team! 👋</p>
+          <h1 class="hero__name" data-split><span class="hero__first">Seth</span> <span class="hero__last">Peacock</span></h1>
+          <!-- EDIT: your one-line tagline -->
+          <p class="hero__tagline">Student pastor. Gospel-loud. Here for the next generation.</p>
+
+          <a class="hero__pill" href="#app"><span aria-hidden="true">✨</span> I built a devotional app <span class="hero__pill-arrow" aria-hidden="true">→</span></a>
+
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#portfolio">See my work</a>
+            <a class="btn" href="resume.pdf" download>Grab my resume <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+
+        <div class="welcome">
+          <div class="welcome__card">
+            <!-- EDIT: add a 5–10 second muted clip at videos/hero-preview.mp4 (the poster image shows until then) -->
+            <video class="welcome__video" muted loop playsinline autoplay preload="metadata" poster="images/hero-poster.svg" aria-hidden="true" tabindex="-1">
+              <source src="videos/hero-preview.mp4" type="video/mp4">
+            </video>
+            <!-- EDIT: data-video-id = your welcome video's YouTube ID (the 11 characters after "v=") -->
+            <button class="welcome__play" type="button" data-video-id="REPLACE_ME" data-video-title="A quick hello from Seth">
+              <span class="welcome__label"><span class="welcome__icon" aria-hidden="true">▶</span> Say hi!</span>
+            </button>
+          </div>
+          <span class="welcome__sticker" aria-hidden="true">60-sec<br>intro!</span>
+        </div>
+      </div>
+    </section>
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="about__intro">
+          <div class="about__photo-wrap" data-reveal="pop">
+            <div class="about__photo">
+              <!-- EDIT: swap in a real photo of you (square, at least 800px) -->
+              <img src="images/seth.svg" alt="Seth Peacock smiling" width="400" height="400" loading="lazy">
+            </div>
+          </div>
+          <div class="about__bio" data-reveal="rise">
+            <p class="eyebrow">About me</p>
+            <h2>Nice to meet you!</h2>
+            <!-- EDIT: your bio -->
+            <p>I'm Seth! God called me into ministry in college, first behind the soundboard as a tech director, then on to seminary to pursue pastoring. Along the way, working jobs outside the church put me shoulder to shoulder with people from every walk of life and lit a fire in me to share the Gospel boldly and pour into the next generation.</p>
+            <p>My wife and I have been married eight years, and we're parents to a three-year-old son. I'm a Birmingham native, and we're finally putting down roots in my hometown, ready to serve a local church here for the long haul.</p>
+          </div>
+        </div>
+
+        <h3 class="about__subhead" data-reveal="rise">What I'm all about</h3>
+        <div class="hearts">
+          <article class="heart-card" data-reveal="pop" style="--delay: 0s">
+            <span class="heart-card__icon" aria-hidden="true">🔥</span>
+            <h3>Students who love God and live on mission</h3>
+            <p>Teaching students to love Jesus deeply and live it out in their schools, teams, and friend groups.</p>
+          </article>
+          <article class="heart-card" data-reveal="pop" style="--delay: .12s">
+            <span class="heart-card__icon" aria-hidden="true">🏡</span>
+            <h3>Parents as primary disciplers</h3>
+            <p>Equipping moms and dads to lead discipleship at home. I'm here to back them up, not replace them.</p>
+          </article>
+          <article class="heart-card" data-reveal="pop" style="--delay: .24s">
+            <span class="heart-card__icon" aria-hidden="true">🙌</span>
+            <h3>Volunteers empowered to invest in students</h3>
+            <p>Casting vision and handing leaders real ownership, so every student is known by a caring adult.</p>
+          </article>
+        </div>
+
+        <!-- EDIT: add your own numbers here (students reached, trips led...) -->
+        <div class="stats">
+          <div class="stat" data-reveal="pop" style="--delay: 0s"><span class="stat__num" data-count="2">2</span><span class="stat__label">Degrees</span></div>
+          <div class="stat" data-reveal="pop" style="--delay: .1s"><span class="stat__num" data-count="2">2</span><span class="stat__label">Campuses launched</span></div>
+          <div class="stat" data-reveal="pop" style="--delay: .2s"><span class="stat__num" data-count="4">4</span><span class="stat__label">Churches served</span></div>
+          <div class="stat stat--badge" data-reveal="pop" style="--delay: .3s"><span class="stat__num" aria-hidden="true">🎓</span><span class="stat__label">Summa Cum Laude</span></div>
+        </div>
+      </div>
+
+      <div class="marquee-wrap">
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee__track">
+            <span>Students</span><span>Families</span><span>Gospel</span><span>Volunteers</span><span>Discipleship</span><span>Birmingham</span>
+            <span>Students</span><span>Families</span><span>Gospel</span><span>Volunteers</span><span>Discipleship</span><span>Birmingham</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section experience" id="experience">
+      <div class="container">
+        <p class="eyebrow">Experience</p>
+        <h2>Where I've served</h2>
+
+        <!-- EDIT: ministry roles (newest first) -->
+        <div class="timeline">
+          <span class="timeline__line" aria-hidden="true"></span>
+          <article class="timeline-card" data-reveal="left">
+            <span class="timeline-card__dot" aria-hidden="true"></span>
+            <p class="dates">Feb 2024 – Aug 2025</p>
+            <h3>Student Pastor</h3>
+            <p class="timeline-card__place">Parkway Baptist Church · Augusta, GA</p>
+            <ul>
+              <li>Planned and preached Sunday and Wednesday student services, plus rotational preaching in the main service.</li>
+              <li>Built adult volunteer and student leadership teams, and launched &ldquo;Parenting with Purpose&rdquo; to equip parents as disciplers.</li>
+              <li>Grew engagement with summer camp, Encounter WKND, and service projects. Also built the church's website, staff email, and online giving.</li>
+            </ul>
+          </article>
+          <article class="timeline-card" data-reveal="right">
+            <span class="timeline-card__dot" aria-hidden="true"></span>
+            <p class="dates">Aug 2023 – Feb 2024</p>
+            <h3>Ministry Resident</h3>
+            <p class="timeline-card__place">Warren Baptist Church · Augusta, GA</p>
+            <ul>
+              <li>Children's ministry residency with bi-monthly leadership training.</li>
+              <li>Taught group Bible study on rotation and wrote the large-group skit for VBS.</li>
+              <li>Built a system for scheduling the church's social media posts ahead of time.</li>
+            </ul>
+          </article>
+          <article class="timeline-card" data-reveal="left">
+            <span class="timeline-card__dot" aria-hidden="true"></span>
+            <p class="dates">Jan 2020 – May 2024</p>
+            <h3>Seminary + Pastoral Apprenticeship</h3>
+            <p class="timeline-card__place">Southern Baptist Theological Seminary · Ninth and O Baptist Church, Louisville, KY</p>
+            <ul>
+              <li>Pastoral apprenticeship under the Executive Pastor: weekly ministry training, church operations, and hospital visits.</li>
+              <li>Led middle and high school boys' small groups and preached Sunday large group on rotation.</li>
+              <li>Led a young couples small group: teaching, discussion, and hosting.</li>
+            </ul>
+          </article>
+          <article class="timeline-card" data-reveal="right">
+            <span class="timeline-card__dot" aria-hidden="true"></span>
+            <p class="dates">Jul 2017 – Oct 2019</p>
+            <h3>Director of Worship Media</h3>
+            <p class="timeline-card__place">Cottage Hill Baptist Church · Mobile, AL</p>
+            <ul>
+              <li>Ran audio, video, and lighting for ministries across multiple campuses.</li>
+              <li>Helped plan, build, and launch two new campuses.</li>
+              <li>Started a discipleship emphasis for tech volunteer teams.</li>
+            </ul>
+          </article>
+        </div>
+
+        <h3 class="experience__subhead" data-reveal="rise">Work that shaped me</h3>
+        <p class="experience__note" data-reveal="rise">Jobs outside the church put me alongside people from every walk of life, and gave me countless chances to share my faith.</p>
+        <div class="work-grid">
+          <div class="work-card" data-reveal="pop" style="--delay: 0.00s">
+            <p class="work-card__title">Account Manager</p>
+            <p class="work-card__company">Peacock Insurance</p>
+            <p class="work-card__dates">Jan 2025 – Present</p>
+          </div>
+          <div class="work-card" data-reveal="pop" style="--delay: 0.08s">
+            <p class="work-card__title">Assistant Operations Manager</p>
+            <p class="work-card__company">All American Chimney Service · Louisville, KY</p>
+            <p class="work-card__dates">Jan 2022 – May 2023</p>
+          </div>
+          <div class="work-card" data-reveal="pop" style="--delay: 0.16s">
+            <p class="work-card__title">Team Member</p>
+            <p class="work-card__company">Chick-fil-A · Louisville, KY</p>
+            <p class="work-card__dates">May 2021 – Jan 2022</p>
+          </div>
+          <div class="work-card" data-reveal="pop" style="--delay: 0.24s">
+            <p class="work-card__title">Supervisor</p>
+            <p class="work-card__company">UPS · Louisville, KY</p>
+            <p class="work-card__dates">Oct 2019 – May 2021</p>
+          </div>
+        </div>
+
+        <h3 class="experience__subhead" data-reveal="rise">Education</h3>
+        <div class="edu-grid">
+          <div class="edu-card" data-reveal="left">
+            <p class="edu-card__degree">M.A. Church Leadership</p>
+            <p class="edu-card__school">Southern Baptist Theological Seminary · May 2024</p>
+            <span class="edu-card__award">🏆 Rice-Judson Scholarship Award</span>
+          </div>
+          <div class="edu-card" data-reveal="right">
+            <p class="edu-card__degree">B.S. Worship Leadership</p>
+            <p class="edu-card__school">University of Mobile · May 2017 · Emphasis in Worship Technology</p>
+            <span class="edu-card__award">🎓 Summa Cum Laude</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section portfolio" id="portfolio">
+      <div class="container portfolio__head">
+        <p class="eyebrow">Portfolio</p>
+        <h2>Stuff I've made</h2>
+      </div>
+
+      <div class="app-spotlight" id="app">
+        <div class="container app-spotlight__grid">
+          <div class="app-spotlight__phones" data-reveal="pop">
+            <!-- EDIT: replace with real screenshots of your app (tall phone screenshots work best) -->
+            <div class="phone phone--back"><img src="images/app-2.svg" alt="Devotional app screenshot: a Bible study page" width="390" height="844" loading="lazy"></div>
+            <div class="phone phone--front"><img src="images/app-1.svg" alt="Devotional app screenshot: today's devotional" width="390" height="844" loading="lazy"></div>
+          </div>
+          <div class="app-spotlight__copy" data-reveal="rise">
+            <span class="app-spotlight__sticker">Built by me!</span>
+            <p class="eyebrow">Featured project</p>
+            <!-- EDIT: your app's name -->
+            <h3 class="app-spotlight__title">My Bible Study Devotional App</h3>
+            <!-- EDIT: what the app does, who it's for, and why you built it -->
+            <p class="app-spotlight__desc">I designed and built this app to help students and families dig into God's Word every day, with devotionals and Bible study in one place.</p>
+            <ul class="app-spotlight__chips">
+              <li>📖 Bible study</li>
+              <li>🙏 Daily devotionals</li>
+              <li>🛠️ Designed &amp; built by me</li>
+            </ul>
+            <!-- EDIT: the link to your app -->
+            <a class="btn btn--app" href="https://example.com/your-app" target="_blank" rel="noopener">Open the app <span class="btn--app__arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <h3 class="portfolio__subhead" data-reveal="rise">Sermons &amp; teaching</h3>
+        <p class="portfolio__hint">Swipe for more →</p>
+        <div class="sermon-track">
+          <!-- EDIT: data-video-id = YouTube ID, plus title, series, and thumbnail -->
+          <button class="sermon-card" type="button" data-video-id="REPLACE_ME" data-video-title="Your sermon title" data-reveal="pop" style="--delay: 0.0s">
+            <span class="sermon-card__thumb">
+              <img src="images/sermon-1.svg" alt="Sermon thumbnail: Your sermon title" width="640" height="360" loading="lazy">
+              <span class="sermon-card__play" aria-hidden="true">▶</span>
+            </span>
+            <span class="sermon-card__title">Your sermon title</span>
+            <span class="sermon-card__series">Series name · Wednesday students</span>
+          </button>
+          <!-- EDIT: data-video-id = YouTube ID, plus title, series, and thumbnail -->
+          <button class="sermon-card" type="button" data-video-id="REPLACE_ME" data-video-title="Your sermon title" data-reveal="pop" style="--delay: 0.1s">
+            <span class="sermon-card__thumb">
+              <img src="images/sermon-2.svg" alt="Sermon thumbnail: Your sermon title" width="640" height="360" loading="lazy">
+              <span class="sermon-card__play" aria-hidden="true">▶</span>
+            </span>
+            <span class="sermon-card__title">Your sermon title</span>
+            <span class="sermon-card__series">Series name · Sunday students</span>
+          </button>
+          <!-- EDIT: data-video-id = YouTube ID, plus title, series, and thumbnail -->
+          <button class="sermon-card" type="button" data-video-id="REPLACE_ME" data-video-title="Your sermon title" data-reveal="pop" style="--delay: 0.2s">
+            <span class="sermon-card__thumb">
+              <img src="images/sermon-3.svg" alt="Sermon thumbnail: Your sermon title" width="640" height="360" loading="lazy">
+              <span class="sermon-card__play" aria-hidden="true">▶</span>
+            </span>
+            <span class="sermon-card__title">Your sermon title</span>
+            <span class="sermon-card__series">Series name · Main service</span>
+          </button>
+        </div>
+
+        <h3 class="portfolio__subhead" data-reveal="rise">On social</h3>
+        <div class="social-grid">
+          <!-- EDIT: link to your Instagram post, plus a caption snippet and image -->
+          <a class="social-card social-card--instagram" data-platform="instagram" href="https://www.instagram.com/" target="_blank" rel="noopener" data-reveal="pop" style="--delay: 0.0s">
+            <span class="social-card__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg> Instagram</span>
+            <img src="images/social-1.svg" alt="Instagram post preview" width="600" height="600" loading="lazy">
+            <span class="social-card__caption">Caption from your post goes here, like a recap of a student night ✨</span>
+            <span class="social-card__cta">View post <span aria-hidden="true">↗</span></span>
+          </a>
+          <!-- EDIT: link to your TikTok post, plus a caption snippet and image -->
+          <a class="social-card social-card--tiktok" data-platform="tiktok" href="https://www.tiktok.com/" target="_blank" rel="noopener" data-reveal="pop" style="--delay: 0.1s">
+            <span class="social-card__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M14 3c.4 2.8 2.2 4.6 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> TikTok</span>
+            <img src="images/social-2.svg" alt="TikTok post preview" width="600" height="600" loading="lazy">
+            <span class="social-card__caption">Caption from your post goes here, like a quick devo or a camp highlight 🔥</span>
+            <span class="social-card__cta">View post <span aria-hidden="true">↗</span></span>
+          </a>
+          <!-- EDIT: link to your Facebook post, plus a caption snippet and image -->
+          <a class="social-card social-card--facebook" data-platform="facebook" href="https://www.facebook.com/" target="_blank" rel="noopener" data-reveal="pop" style="--delay: 0.2s">
+            <span class="social-card__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H9v3h2.5V21z" fill="currentColor"/></svg> Facebook</span>
+            <img src="images/social-3.svg" alt="Facebook post preview" width="600" height="600" loading="lazy">
+            <span class="social-card__caption">Caption from your post goes here, like a parent event announcement 🙌</span>
+            <span class="social-card__cta">View post <span aria-hidden="true">↗</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="section contact" id="contact">
+      <div class="container contact__inner">
+        <p class="eyebrow">Contact</p>
+        <h2 class="contact__title" data-reveal="pop">Let's do ministry together!</h2>
+        <!-- EDIT: your closing invitation -->
+        <p class="contact__lead" data-reveal="rise">If your church is looking for a student pastor who loves Jesus, students, and families, I'd love to talk.</p>
+        <div class="contact__actions" data-reveal="rise">
+          <a class="btn btn--primary contact__email" href="mailto:sethlp114@gmail.com"><span aria-hidden="true">✉️</span> sethlp114@gmail.com</a>
+          <a class="btn" href="resume.pdf" download>Grab my resume <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="contact__refs">References available on request.</p>
+        <!-- EDIT: links to your social profiles -->
+        <ul class="contact__socials">
+          <li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg></a></li>
+          <li><a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M14 3c.4 2.8 2.2 4.6 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></a></li>
+          <li><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H9v3h2.5V21z" fill="currentColor"/></svg></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span class="footer__year">2026</span> Seth Peacock · Made with <span aria-hidden="true">❤️</span><span class="visually-hidden">love</span> in Birmingham</p>
+  </footer>
+
+  <dialog class="video-modal" id="video-modal" aria-label="Video player">
+    <div class="video-modal__inner">
+      <button class="video-close" type="button" aria-label="Close video">✕</button>
+      <div class="video-frame"></div>
+      <p class="video-modal__title"></p>
+    </div>
+  </dialog>
+</body>
+</html>

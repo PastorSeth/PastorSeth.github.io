@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844">
+  <rect width="390" height="844" fill="#FFF8EE"/>
+  <rect width="390" height="330" fill="#00C2A8"/>
+  <circle cx="320" cy="80" r="90" fill="#FF5A5F" opacity=".9"/>
+  <text x="40" y="200" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="700" font-size="40" fill="#FFF8EE">Bible Study</text>
+  <text x="40" y="250" font-family="Arial, sans-serif" font-size="22" fill="#FFF8EE" opacity=".9">App screenshot here</text>
+  <rect x="40" y="430" width="310" height="14" rx="7" fill="#1A1423" opacity=".18"/><rect x="40" y="462" width="280" height="14" rx="7" fill="#1A1423" opacity=".18"/><rect x="40" y="494" width="300" height="14" rx="7" fill="#1A1423" opacity=".18"/><rect x="40" y="526" width="220" height="14" rx="7" fill="#1A1423" opacity=".18"/><rect x="40" y="588" width="300" height="14" rx="7" fill="#1A1423" opacity=".18"/><rect x="40" y="620" width="260" height="14" rx="7" fill="#1A1423" opacity=".18"/><rect x="40" y="652" width="290" height="14" rx="7" fill="#1A1423" opacity=".18"/>
+  <rect x="40" y="720" width="310" height="70" rx="35" fill="#FF5A5F" stroke="#1A1423" stroke-width="4"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#FFD23F"/>
+  <circle cx="540" cy="70" r="120" fill="#FF5A5F"/>
+  <path d="M0 300c80-40 160-40 240 0s160 40 240 0 160-40 160-40v100H0z" fill="#1A1423" opacity=".15"/>
+  <text x="40" y="150" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="700" font-size="46" fill="#1A1423">Sermon 3</text>
+  <text x="40" y="196" font-family="Arial, sans-serif" font-size="24" fill="#1A1423">Thumbnail here</text>
+</svg>

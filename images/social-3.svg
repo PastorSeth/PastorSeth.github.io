@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="#00C2A8"/>
+  <circle cx="300" cy="270" r="150" fill="#FF5A5F"/>
+  <path d="M60 600l120-170 90 110 70-80 200 140z" fill="#FFF8EE" opacity=".85"/>
+  <text x="300" y="285" text-anchor="middle" font-family="Arial Rounded MT Bold, Arial, sans-serif" font-weight="700" font-size="38" fill="#1A1423">Post image</text>
+</svg>

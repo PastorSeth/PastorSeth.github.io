@@ -1,0 +1,5 @@
+# GitHub Pages settings. Only the site itself should be published.
+exclude:
+  - docs
+  - tests
+  - README.md
