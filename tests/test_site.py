@@ -400,16 +400,23 @@ class TestPortfolio(unittest.TestCase):
         for vid in ids:
             self.assertTrue(vid == "REPLACE_ME" or re.fullmatch(r"[A-Za-z0-9_-]{11}", vid), vid)
 
+    def test_real_sermons(self):
+        ids = [b.attrs["data-video-id"] for b in self.portfolio.find_all("button", class_="sermon-card")]
+        self.assertEqual(ids, ["ANSNAaILUqs", "a2X-9_vmeU8", "g_9Q1AJcIms"])
+
     def test_social_cards(self):
         cards = self.portfolio.find_all("a", class_="social-card")
-        self.assertGreaterEqual(len(cards), 3)
+        self.assertEqual(len(cards), 4)
         for card in cards:
-            self.assertIn(card.attrs.get("data-platform"), {"instagram", "tiktok", "facebook"})
+            self.assertIn(card.attrs.get("data-platform"), {"instagram", "facebook"})
             self.assertEqual(card.attrs.get("target"), "_blank")
             self.assertIn("noopener", card.attrs.get("rel", ""))
-            imgs = card.find_all("img")
-            self.assertEqual(len(imgs), 1)
-            self.assertTrue(imgs[0].attrs.get("alt"))
+            href = card.attrs["href"]
+            self.assertTrue(href.startswith("https://www.instagram.com/reel/") or
+                            href.startswith("https://www.facebook.com/share/v/"), href)
+            # Share links are kept free of tracking codes
+            self.assertNotIn("igsh", href)
+            self.assertNotIn("mibextid", href)
 
 
 def _block_after(css, marker):

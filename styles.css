@@ -934,7 +934,17 @@ body.menu-open { overflow: hidden; }
 }
 .social-card--tiktok { background: var(--emerald); box-shadow: 6px 6px 0 var(--sapphire); }
 .social-card--facebook { background: var(--ruby); box-shadow: 6px 6px 0 var(--gold); }
-.social-card img { width: 100%; aspect-ratio: 1; object-fit: cover; border: 3px solid var(--night); }
+/* A little pixel "screen" with a play button stands in for the post image */
+.social-card__screen {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  background: var(--night) repeating-linear-gradient(to bottom, rgba(255, 246, 229, .06) 0 1px, transparent 1px 3px);
+  color: var(--gold);
+  border: 3px solid var(--night);
+}
+.social-card__screen svg { width: 30px; height: auto; margin-left: 6px; }
+.social-card__caption { font-size: 1.15rem; font-weight: 700; }
 .social-card__badge {
   display: inline-flex;
   align-self: flex-start;
@@ -961,7 +971,7 @@ body.menu-open { overflow: hidden; }
   .phone { width: 220px; }
   .portfolio__hint { display: none; }
   .sermon-track { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; margin-inline: 0; padding-inline: 0; }
-  .social-grid { grid-template-columns: repeat(3, 1fr); }
+  .social-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* ==========================================================================
@@ -1197,7 +1207,7 @@ body.menu-open { overflow: hidden; }
 
 /* Social posts: the photos develop like a print */
 .js [data-reveal="develop"].is-visible { animation: rv-rise .5s steps(4) var(--delay, 0s) backwards; }
-.js [data-reveal="develop"].is-visible img { animation: rv-develop 1.8s steps(9) calc(var(--delay, 0s) + .2s) backwards; }
+.js [data-reveal="develop"].is-visible .social-card__screen { animation: rv-develop 1.8s steps(9) calc(var(--delay, 0s) + .2s) backwards; }
 .js [data-reveal="develop"].is-visible .social-card__badge { animation: rv-stamp .45s var(--bounce) calc(var(--delay, 0s) + .5s) backwards; }
 
 /* Prayer card: the dove pops in (then stays solid), each "Pray" lights up in turn, then the words type in */
