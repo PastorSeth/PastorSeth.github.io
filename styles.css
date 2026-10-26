@@ -541,47 +541,36 @@ body.menu-open { overflow: hidden; }
   border: 3px solid var(--cream);
 }
 
-/* Prayer card: full width, edge to edge, the emphasis of the About section */
-.prayer {
+/* Prayer card: the fourth strategy card, spanning the full row with a gold accent */
+.heart-card--prayer {
+  --accent: var(--gold);
   position: relative;
-  margin-top: 72px;
-  padding: 64px 0 60px;
-  overflow: clip;
-  text-align: center;
-  background: var(--deep);
-  color: var(--cream);
-  border-block: 3px solid var(--gold);
+  grid-column: 1 / -1;
+  overflow: hidden;
 }
-.prayer::before {
+.heart-card--prayer::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: repeating-conic-gradient(var(--gold) 0 25%, var(--violet) 0 50%) 0 0 / 28px 28px;
-  opacity: .08;
+  background: repeating-conic-gradient(var(--gold) 0 25%, var(--violet) 0 50%) 0 0 / 24px 24px;
+  opacity: .07;
   pointer-events: none;
 }
-.prayer__inner { position: relative; display: flex; flex-direction: column; align-items: center; }
-.prayer__cross {
-  width: 42px;
-  height: auto;
-  margin-bottom: 18px;
-  color: var(--gold);
-  filter: drop-shadow(0 0 10px rgba(255, 210, 63, .8));
-  animation: prayer-glow 2.4s steps(3) infinite;
-}
-.prayer__title {
-  margin: 0 0 22px;
+.heart-card--prayer > * { position: relative; }
+/* Beats the shared .heart-card h3 size */
+.heart-card .prayer__title {
+  margin: 0 0 14px;
   font-family: var(--font-gothic);
   font-weight: 400;
-  font-size: clamp(3.6rem, 19vw, 6rem);
+  font-size: clamp(2.6rem, 13vw, 3.8rem);
   line-height: 1;
   color: var(--gold);
-  text-shadow: 4px 4px 0 var(--ruby), 8px 8px 0 var(--sapphire);
+  text-shadow: 3px 3px 0 var(--ruby), 6px 6px 0 var(--sapphire);
 }
-/* On phones each "Pray" gets its own line, for emphasis */
+/* Phones: one "Pray" per line, for emphasis. Wider screens: in a row. */
 .prayer__word { display: block; }
 .prayer__word:nth-child(2) { color: var(--cream); }
-.prayer__text { max-width: 34ch; margin: 0; font-size: 1.2rem; font-weight: 500; line-height: 1.55; }
+.prayer__text { max-width: 60ch; font-size: 1.1rem; }
 .prayer__text strong { color: var(--gold); }
 
 /* Marquee strip */
@@ -605,7 +594,6 @@ body.menu-open { overflow: hidden; }
   text-transform: uppercase;
   white-space: nowrap;
 }
-.prayer ~ .marquee-wrap { margin-top: 0; }
 /* The verse banner: slower and a little smaller, so the whole verse is readable */
 .marquee--verse .marquee__track { animation-duration: 60s; }
 .marquee--verse .marquee__track span { font-size: clamp(1rem, 4.5vw, 1.35rem); }
@@ -620,7 +608,6 @@ body.menu-open { overflow: hidden; }
   .about__intro { grid-template-columns: .8fr 1.2fr; gap: 56px; }
   .hearts { grid-template-columns: repeat(3, 1fr); }
   .prayer__word { display: inline-block; }
-  .prayer__text { max-width: 42ch; font-size: 1.3rem; }
 }
 
 /* ==========================================================================
@@ -1213,8 +1200,8 @@ body.menu-open { overflow: hidden; }
 .js [data-reveal="develop"].is-visible img { animation: rv-develop 1.8s steps(9) calc(var(--delay, 0s) + .2s) backwards; }
 .js [data-reveal="develop"].is-visible .social-card__badge { animation: rv-stamp .45s var(--bounce) calc(var(--delay, 0s) + .5s) backwards; }
 
-/* Prayer card: the cross ignites, each "Pray" lights up in turn, then the words type in */
-.js [data-reveal="pray"].is-visible .prayer__cross { animation: rv-ignite .6s steps(3) .1s backwards, prayer-glow 2.4s steps(3) .8s infinite; }
+/* Prayer card: the dove pops in (then stays solid), each "Pray" lights up in turn, then the words type in */
+.js [data-reveal="pray"].is-visible .heart-card__icon { animation: rv-ignite .6s steps(3) .1s backwards; }
 .js [data-reveal="pray"].is-visible .prayer__word { animation: rv-light .55s steps(4) .3s backwards, prayer-word 4.8s steps(1) 2.4s infinite; }
 .js [data-reveal="pray"].is-visible .prayer__word:nth-child(2) { animation-delay: .8s, 4s; }
 .js [data-reveal="pray"].is-visible .prayer__word:nth-child(3) { animation-delay: 1.3s, 5.6s; }
@@ -1277,7 +1264,6 @@ body.menu-open { overflow: hidden; }
 }
 @keyframes rv-develop { from { opacity: .06; transform: scale(1.08); } to { opacity: 1; transform: none; } }
 @keyframes rv-light { 0% { opacity: 0; transform: scale(.6); } 60% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: none; } }
-@keyframes prayer-glow { 50% { opacity: .55; } }
 @keyframes prayer-word {
   0%, 88%, 100% { text-shadow: 4px 4px 0 var(--ruby), 8px 8px 0 var(--sapphire); }
   92% { text-shadow: 0 0 18px rgba(255, 210, 63, .95), 4px 4px 0 var(--ruby); }

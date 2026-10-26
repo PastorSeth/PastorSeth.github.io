@@ -274,12 +274,13 @@ class TestAbout(unittest.TestCase):
 
     def test_heart_cards(self):
         cards = self.about.find_all(class_="heart-card")
-        self.assertEqual(len(cards), 3)
+        self.assertEqual(len(cards), 4)
         titles = [c.find_all("h3")[0].text for c in cards]
         self.assertEqual(titles, [
             "Students who love God and live on mission",
             "Parents as primary disciplers",
             "Volunteers empowered to invest in students",
+            "Pray Pray Pray",
         ])
 
     def test_bio_facts(self):
@@ -289,16 +290,18 @@ class TestAbout(unittest.TestCase):
         for img in imgs:
             self.assertTrue(img.attrs.get("alt"))
 
-    def test_prayer_card_replaces_stats(self):
+    def test_prayer_card_is_fourth_card_full_width(self):
         self.assertEqual(self.about.find_all(class_="stat"), [])
-        cards = self.about.find_all(class_="prayer")
-        self.assertEqual(len(cards), 1)
-        card = cards[0]
-        self.assertEqual(card.find_all("h3")[0].text, "Pray Pray Pray")
-        self.assertIn("Prayer is the glue that holds the ministry together.", card.text)
-        # Full width: it sits outside the section's centered container
-        containers = self.about.find_all(class_="container")
-        self.assertFalse(any(card in c.iter() for c in containers))
+        cards = self.about.find_all(class_="heart-card")
+        prayer = cards[-1]
+        self.assertIn("heart-card--prayer", prayer.attrs["class"].split())
+        self.assertIn("Prayer is the glue that holds the ministry together.", prayer.text)
+        self.assertEqual(len(prayer.find_all(class_="heart-card__icon")), 1)
+        # The icon is the pixel dove (Holy Spirit), not a cross
+        icon_svg = prayer.find_all(class_="heart-card__icon")[0].find_all("svg")[0]
+        self.assertEqual(icon_svg.attrs.get("viewbox"), "0 0 17 13")
+        rule = " ".join(_rule(read_css(), ".heart-card--prayer").split())
+        self.assertRegex(rule, r"grid-column:\s*1\s*/\s*-1")
 
     def test_marquee_a11y(self):
         marquees = page().find_all(class_="marquee")
