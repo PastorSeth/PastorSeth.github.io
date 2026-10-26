@@ -215,7 +215,7 @@ class TestCathedralNight(unittest.TestCase):
         rec = hero.find_all(class_="welcome__rec")
         self.assertEqual(len(rec), 1)
         self.assertEqual(rec[0].text, "● HELLO.MP4")
-        self.assertIn("Hey, search team!", hero.text)
+        self.assertIn("Resume & Portfolio", hero.text)
 
     def test_crt_overlay(self):
         crt = page().find_all(class_="crt")
@@ -245,11 +245,11 @@ class TestHero(unittest.TestCase):
         self.assertEqual(len(resume), 1)
 
     def test_app_pill(self):
-        pills = [a for a in self.hero.find_all("a", href="#app") if "I built a devotional app" in a.text]
+        pills = [a for a in self.hero.find_all("a", href="#app") if "Check out this curriculum I wrote" in a.text]
         self.assertEqual(len(pills), 1)
 
     def test_welcome_card(self):
-        buttons = [b for b in self.hero.find_all("button", data_video_id=True) if "Say hi" in b.text]
+        buttons = [b for b in self.hero.find_all("button", data_video_id=True) if "Welcome Video" in b.text]
         self.assertEqual(len(buttons), 1)
         videos = self.hero.find_all("video")
         self.assertEqual(len(videos), 1)
@@ -289,28 +289,27 @@ class TestAbout(unittest.TestCase):
         for img in imgs:
             self.assertTrue(img.attrs.get("alt"))
 
-    def test_stats(self):
-        stats = self.about.find_all(class_="stat")
-        counted = [s for s in stats if "data-count" in s.attrs or s.find_all(data_count=True)]
-
-        def count_of(s):
-            if "data-count" in s.attrs:
-                return s.attrs["data-count"]
-            return s.find_all(data_count=True)[0].attrs["data-count"]
-
-        self.assertEqual([count_of(s) for s in counted], ["2", "2", "4"])
-        labels = [s.find_all(class_="stat__label")[0].text for s in counted]
-        self.assertEqual(labels, ["Degrees", "Campuses launched", "Churches served"])
-        uncounted = [s for s in stats if s not in counted]
-        self.assertEqual(len(uncounted), 1)
-        self.assertIn("Summa Cum Laude", uncounted[0].text)
+    def test_prayer_card_replaces_stats(self):
+        self.assertEqual(self.about.find_all(class_="stat"), [])
+        cards = self.about.find_all(class_="prayer")
+        self.assertEqual(len(cards), 1)
+        card = cards[0]
+        self.assertEqual(card.find_all("h3")[0].text, "Pray Pray Pray")
+        self.assertIn("Prayer is the glue that holds the ministry together.", card.text)
+        # Full width: it sits outside the section's centered container
+        containers = self.about.find_all(class_="container")
+        self.assertFalse(any(card in c.iter() for c in containers))
 
     def test_marquee_a11y(self):
         marquees = page().find_all(class_="marquee")
         self.assertEqual(len(marquees), 1)
         m = marquees[0]
         self.assertEqual(m.attrs.get("aria-hidden"), "true")
-        self.assertEqual(m.text.count("Discipleship"), 2)
+        # The verse scrolls twice for a seamless loop...
+        self.assertEqual(m.text.count("to equip the saints for the work of ministry"), 2)
+        # ...and screen readers get it once, read normally
+        hidden = [p for p in self.about.find_all(class_="visually-hidden") if "Ephesians 4:11" in p.text]
+        self.assertEqual(len(hidden), 1)
 
 
 class TestExperience(unittest.TestCase):
@@ -320,7 +319,7 @@ class TestExperience(unittest.TestCase):
     def test_ministry_roles(self):
         self.assertEqual([c.find_all("h3")[0].text for c in self.cards], [
             "Student Pastor", "Ministry Resident",
-            "Seminary + Pastoral Apprenticeship", "Director of Worship Media",
+            "Full Time Seminary Student", "Director of Worship Media",
         ])
         self.assertEqual([c.find_all(class_="dates")[0].text for c in self.cards], [
             "Feb 2024 – Aug 2025", "Aug 2023 – Feb 2024",
@@ -370,7 +369,7 @@ class TestPortfolio(unittest.TestCase):
         kids = self.portfolio.children
         self.assertTrue(kids[0].find_all("h2"), "portfolio should open with its heading")
         self.assertEqual(kids[1].attrs.get("id"), "app")
-        self.assertIn("Built by me", self.app.text)
+        self.assertIn("Written by me", self.app.text)
 
     def test_app_link(self):
         links = self.app.find_all("a", class_="btn--app")
@@ -501,6 +500,10 @@ class TestContact(unittest.TestCase):
         self.assertEqual(len(contact.find_all("a", href="resume.pdf", download=True)), 1)
         self.assertIn("References available on request", contact.text)
         self.assertIn("Let's do ministry together", contact.text)
+
+    def test_no_tiktok_profile_link(self):
+        links = page().by_id("contact").find_all("a", aria_label="TikTok")
+        self.assertEqual(links, [])
 
     def test_assets_exist(self):
         optional = {"videos/hero-preview.mp4"}
