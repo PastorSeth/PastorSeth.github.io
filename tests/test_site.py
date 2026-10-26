@@ -214,7 +214,7 @@ class TestCathedralNight(unittest.TestCase):
         self.assertEqual(window[0].attrs.get("aria-hidden"), "true")
         rec = hero.find_all(class_="welcome__rec")
         self.assertEqual(len(rec), 1)
-        self.assertIn("REC · HELLO.MP4", rec[0].text)
+        self.assertEqual(rec[0].text, "● HELLO.MP4")
         self.assertIn("Hey, search team!", hero.text)
 
     def test_crt_overlay(self):
