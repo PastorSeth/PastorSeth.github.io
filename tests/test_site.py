@@ -408,10 +408,13 @@ class TestPortfolio(unittest.TestCase):
         cards = self.portfolio.find_all("a", class_="social-card")
         self.assertEqual(len(cards), 4)
         for card in cards:
-            self.assertIn(card.attrs.get("data-platform"), {"instagram", "facebook"})
+            self.assertIn(card.attrs.get("data-platform"), {"instagram", "facebook", "newsletter"})
             self.assertEqual(card.attrs.get("target"), "_blank")
             self.assertIn("noopener", card.attrs.get("rel", ""))
             href = card.attrs["href"]
+            if card.attrs["data-platform"] == "newsletter":
+                self.assertTrue(exists_exact(href), href)
+                continue
             self.assertTrue(href.startswith("https://www.instagram.com/reel/") or
                             href.startswith("https://www.facebook.com/share/v/"), href)
             # Share links are kept free of tracking codes
