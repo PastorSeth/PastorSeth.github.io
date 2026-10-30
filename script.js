@@ -85,6 +85,24 @@ function initVideoModal() {
   });
 }
 
+/* ---------- Picture viewers (the invite cards) ---------- */
+// A link with data-modal="<dialog id>" opens that dialog; without JS it just follows its href.
+function initImageModals() {
+  document.querySelectorAll('[data-modal]').forEach((trigger) => {
+    const dialog = document.getElementById(trigger.dataset.modal);
+    if (!dialog || !dialog.showModal) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      dialog.showModal();
+      dialog.querySelector('.image-modal__body').scrollTop = 0;
+    });
+    dialog.querySelector('.video-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener('close', () => trigger.focus());
+  });
+}
+
 /* ---------- Motion ---------- */
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -216,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   window.siteReady = true;
   // Each extra runs on its own, so one broken piece (say, an edited-out menu) can't stop the rest.
-  [initNav, initVideoModal, initHeroArt, initTimelineLine, initFooterYear].forEach((init) => {
+  [initNav, initVideoModal, initImageModals, initHeroArt, initTimelineLine, initFooterYear].forEach((init) => {
     try { init(); } catch (err) { console.error(err); }
   });
 });

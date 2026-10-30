@@ -293,10 +293,10 @@
         <h3 class="portfolio__subhead" data-reveal="glitch">Promo Material</h3>
         <div class="social-grid">
           <!-- EDIT: link and title for this promo video -->
-          <a class="social-card social-card--instagram" data-platform="instagram" href="https://www.instagram.com/reel/DJAWI2GyBYJ/" target="_blank" rel="noopener" data-reveal="develop" style="--delay: 0.0s">
+          <a class="social-card social-card--instagram" data-platform="instagram" href="https://www.instagram.com/reel/DHmZuJ_y9Rz/" target="_blank" rel="noopener" data-reveal="develop" style="--delay: 0.0s">
             <span class="social-card__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg> Instagram</span>
             <span class="social-card__screen" aria-hidden="true"><svg class="px" viewBox="0 0 3 5" width="9" height="15" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h1v1h1v1H2v1H1v1H0z"/></svg></span>
-            <span class="social-card__caption">5th Wednesday Promo</span>
+            <span class="social-card__caption">Wednesday Night Promo Video</span>
             <span class="social-card__cta">Watch on Instagram <span aria-hidden="true">↗</span></span>
           </a>
           <!-- EDIT: link and title for this promo video -->
@@ -313,12 +313,12 @@
             <span class="social-card__caption">PKWY Students December Newsletter</span>
             <span class="social-card__cta">Read the email <span aria-hidden="true">↗</span></span>
           </a>
-          <!-- EDIT: link and title for this promo video -->
-          <a class="social-card social-card--instagram" data-platform="instagram" href="https://www.instagram.com/reel/DHmZuJ_y9Rz/" target="_blank" rel="noopener" data-reveal="develop" style="--delay: 0.3s">
-            <span class="social-card__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg> Instagram</span>
-            <span class="social-card__screen" aria-hidden="true"><svg class="px" viewBox="0 0 3 5" width="9" height="15" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1h1v1h1v1H2v1H1v1H0z"/></svg></span>
-            <span class="social-card__caption">Wednesday Night Promo Video</span>
-            <span class="social-card__cta">Watch on Instagram <span aria-hidden="true">↗</span></span>
+          <!-- EDIT: title for these invite cards. Clicking opens #cards-modal below; the PDF link is the fallback. -->
+          <a class="social-card social-card--print" data-platform="print" href="files/fifth-wednesday-invite-cards.pdf" target="_blank" rel="noopener" data-modal="cards-modal" data-reveal="develop" style="--delay: 0.3s">
+            <span class="social-card__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z" fill="none" stroke="currentColor" stroke-width="2.2"/></svg> Print</span>
+            <span class="social-card__screen social-card__screen--image" aria-hidden="true"><img src="images/fifth-wednesday-invite.jpg" alt="" width="1000" height="772" loading="lazy"></span>
+            <span class="social-card__caption">Fifth Wednesday Invite Cards</span>
+            <span class="social-card__cta">View the cards <span aria-hidden="true">↗</span></span>
           </a>
         </div>
       </div>
@@ -354,6 +354,23 @@
       <button class="video-close" type="button" aria-label="Close video">✕</button>
       <div class="video-frame"></div>
       <p class="video-modal__title"></p>
+    </div>
+  </dialog>
+
+  <dialog class="video-modal image-modal" id="cards-modal" aria-label="Fifth Wednesday invite cards">
+    <div class="video-modal__inner">
+      <button class="video-close" type="button" aria-label="Close invite cards">✕</button>
+      <div class="image-modal__body">
+        <figure>
+          <img src="images/fifth-wednesday-invite.jpg" alt="Front: two ghosts roasting a marshmallow and a hot dog over a campfire. Fifth Wednesday, October 30, 6:30pm." width="1400" height="1081" loading="lazy">
+          <figcaption>Front</figcaption>
+        </figure>
+        <figure>
+          <img src="images/fifth-wednesday-invite-back.jpg" alt="Back: Hotdogs, s'mores and more! A ghost says tell your friends. Parkway Baptist Church, 2543 William Few Parkway, Evans, GA 30809." width="1400" height="1081" loading="lazy">
+          <figcaption>Back</figcaption>
+        </figure>
+      </div>
+      <p class="video-modal__title">Fifth Wednesday Invite Cards</p>
     </div>
   </dialog>
 </body>

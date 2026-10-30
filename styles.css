@@ -933,6 +933,7 @@ body.menu-open { overflow: hidden; }
   box-shadow: 6px 6px 0 var(--ruby);
 }
 .social-card--newsletter { background: var(--emerald); box-shadow: 6px 6px 0 var(--sapphire); }
+.social-card--print { background: var(--violet); box-shadow: 6px 6px 0 var(--gold); }
 .social-card--facebook { background: var(--ruby); box-shadow: 6px 6px 0 var(--gold); }
 /* A little pixel "screen" with a play button stands in for the post image */
 .social-card__screen {
@@ -947,6 +948,7 @@ body.menu-open { overflow: hidden; }
 /* The newsletter tile shows the top of the email itself */
 .social-card__screen--image { overflow: hidden; }
 .social-card__screen--image img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.social-card--print .social-card__screen--image img { object-position: center; }
 .social-card__caption { font-size: 1.15rem; font-weight: 700; }
 .social-card__badge {
   display: inline-flex;
@@ -1047,6 +1049,26 @@ body.menu-open { overflow: hidden; }
   background: var(--deep);
   border: 4px solid var(--gold);
   box-shadow: 8px 8px 0 var(--ruby), 16px 16px 0 var(--sapphire);
+}
+/* Same frame as the video player, holding pictures instead (the invite cards) */
+.image-modal { width: min(94vw, 900px); }
+.image-modal__body {
+  display: grid;
+  gap: 18px;
+  max-height: calc(100vh - 9rem);
+  max-height: calc(100dvh - 9rem);
+  padding: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.image-modal__body figure { margin: 0; }
+.image-modal__body img { display: block; width: 100%; height: auto; border: 3px solid var(--cream); }
+.image-modal__body figcaption {
+  margin-top: 8px;
+  font-family: var(--font-pixel);
+  font-size: .7rem;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 .video-frame { aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; background: var(--deep); }
 .video-frame iframe { width: 100%; height: 100%; border: 0; }

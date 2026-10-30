@@ -268,6 +268,20 @@ class TestHero(unittest.TestCase):
         self.assertEqual(len(d.find_all("button", class_="video-close", aria_label="Close video")), 1)
 
 
+    def test_cards_modal(self):
+        trigger = page().by_id("portfolio").find_all("a", class_="social-card--print")[0]
+        self.assertEqual(trigger.attrs.get("data-modal"), "cards-modal")
+        dialogs = page().find_all("dialog", id="cards-modal")
+        self.assertEqual(len(dialogs), 1)
+        d = dialogs[0]
+        self.assertTrue(d.attrs.get("aria-label"))
+        self.assertEqual(len(d.find_all("button", class_="video-close")), 1)
+        imgs = d.find_all("img")
+        self.assertEqual(len(imgs), 2)
+        for img in imgs:
+            self.assertTrue(img.attrs.get("alt"))
+            self.assertTrue(exists_exact(img.attrs["src"]), img.attrs["src"])
+
 class TestAbout(unittest.TestCase):
     def setUp(self):
         self.about = page().by_id("about")
@@ -408,11 +422,11 @@ class TestPortfolio(unittest.TestCase):
         cards = self.portfolio.find_all("a", class_="social-card")
         self.assertEqual(len(cards), 4)
         for card in cards:
-            self.assertIn(card.attrs.get("data-platform"), {"instagram", "facebook", "newsletter"})
+            self.assertIn(card.attrs.get("data-platform"), {"instagram", "facebook", "newsletter", "print"})
             self.assertEqual(card.attrs.get("target"), "_blank")
             self.assertIn("noopener", card.attrs.get("rel", ""))
             href = card.attrs["href"]
-            if card.attrs["data-platform"] == "newsletter":
+            if card.attrs["data-platform"] in {"newsletter", "print"}:
                 self.assertTrue(exists_exact(href), href)
                 continue
             self.assertTrue(href.startswith("https://www.instagram.com/reel/") or
