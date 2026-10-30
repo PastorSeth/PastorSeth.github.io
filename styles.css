@@ -914,6 +914,7 @@ body.menu-open { overflow: hidden; }
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+a.sermon-card { text-decoration: none; }
 .sermon-card__thumb { position: relative; display: block; margin-bottom: 12px; border-bottom: var(--border); }
 .sermon-card__thumb img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .sermon-card__play {

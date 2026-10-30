@@ -411,22 +411,29 @@ class TestPortfolio(unittest.TestCase):
     def test_sermon_cards(self):
         tracks = self.portfolio.find_all(class_="sermon-track")
         self.assertEqual(len(tracks), 1)
-        cards = tracks[0].find_all("button", class_="sermon-card", data_video_id=True, data_video_title=True)
+        cards = tracks[0].find_all(class_="sermon-card")
         self.assertGreaterEqual(len(cards), 3)
         for card in cards:
+            if card.tag == "a":
+                # Videos hosted elsewhere (Subsplash) open in a new tab
+                self.assertEqual(card.attrs.get("target"), "_blank")
+                self.assertIn("noopener", card.attrs.get("rel", ""))
+                self.assertTrue(card.attrs.get("href", "").startswith("https://"))
+            else:
+                self.assertTrue(card.attrs.get("data-video-id") and card.attrs.get("data-video-title"))
             imgs = card.find_all("img")
             self.assertEqual(len(imgs), 1)
             self.assertTrue(imgs[0].attrs.get("alt"))
 
     def test_video_ids_valid(self):
         ids = [el.attrs["data-video-id"] for el in page().find_all(data_video_id=True)]
-        self.assertGreaterEqual(len(ids), 4)
+        self.assertGreaterEqual(len(ids), 3)
         for vid in ids:
             self.assertTrue(vid == "REPLACE_ME" or re.fullmatch(r"[A-Za-z0-9_-]{11}", vid), vid)
 
     def test_real_sermons(self):
         ids = [b.attrs["data-video-id"] for b in self.portfolio.find_all("button", class_="sermon-card")]
-        self.assertEqual(ids, ["ANSNAaILUqs", "a2X-9_vmeU8", "g_9Q1AJcIms"])
+        self.assertEqual(ids, ["ANSNAaILUqs", "a2X-9_vmeU8"])
 
     def test_social_cards(self):
         cards = self.portfolio.find_all("a", class_="social-card")
