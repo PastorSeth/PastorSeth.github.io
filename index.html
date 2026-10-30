@@ -306,10 +306,10 @@
             <span class="social-card__caption">Summer Wars Recap</span>
             <span class="social-card__cta">Watch on Facebook <span aria-hidden="true">↗</span></span>
           </a>
-          <!-- EDIT: title for this newsletter (the image is images/newsletter.webp) -->
-          <a class="social-card social-card--newsletter" data-platform="newsletter" href="images/newsletter.webp" target="_blank" rel="noopener" data-reveal="develop" style="--delay: 0.2s">
+          <!-- EDIT: title for this newsletter. Clicking opens #newsletter-modal below; the image link is the fallback. -->
+          <a class="social-card social-card--newsletter" data-platform="newsletter" href="images/newsletter.jpg" target="_blank" rel="noopener" data-modal="newsletter-modal" data-reveal="develop" style="--delay: 0.2s">
             <span class="social-card__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M3 6l9 7 9-7" fill="none" stroke="currentColor" stroke-width="2.2"/></svg> Email</span>
-            <span class="social-card__screen social-card__screen--image" aria-hidden="true"><img src="images/newsletter.webp" alt="" width="1012" height="2000" loading="lazy"></span>
+            <span class="social-card__screen social-card__screen--image" aria-hidden="true"><img src="images/newsletter.jpg" alt="" width="478" height="2000" loading="lazy"></span>
             <span class="social-card__caption">PKWY Students December Newsletter</span>
             <span class="social-card__cta">Read the email <span aria-hidden="true">↗</span></span>
           </a>
@@ -354,6 +354,16 @@
       <button class="video-close" type="button" aria-label="Close video">✕</button>
       <div class="video-frame"></div>
       <p class="video-modal__title"></p>
+    </div>
+  </dialog>
+
+  <dialog class="video-modal image-modal image-modal--tall" id="newsletter-modal" aria-label="PKWY Students December newsletter">
+    <div class="video-modal__inner">
+      <button class="video-close" type="button" aria-label="Close newsletter">✕</button>
+      <div class="image-modal__body">
+        <img src="images/newsletter.jpg" alt="PKWY Students December newsletter email. The Inside Scoop: an outreach Christmas night on December 11, a Christmas party at the Peacocks' house on December 20, a new student section in big church, wrapping up the James sermon series, Encounter Weekend January 31 to February 2, and summer camp June 2 to 7. For the Parents: an article on why religious teens were less affected by the Great Rewiring, plus links to Axis and Rooted parent resources." width="478" height="2000" loading="lazy">
+      </div>
+      <p class="video-modal__title">PKWY Students December Newsletter</p>
     </div>
   </dialog>
 

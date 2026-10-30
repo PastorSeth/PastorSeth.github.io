@@ -1052,6 +1052,10 @@ body.menu-open { overflow: hidden; }
 }
 /* Same frame as the video player, holding pictures instead (the invite cards) */
 .image-modal { width: min(94vw, 900px); }
+/* A long, narrow email: kept no wider than reads well, and scrolled top to bottom */
+.image-modal--tall { width: min(94vw, 640px); }
+.image-modal--tall .image-modal__body { padding: 0; }
+.image-modal--tall .image-modal__body img { border: 0; }
 .image-modal__body {
   display: grid;
   gap: 18px;

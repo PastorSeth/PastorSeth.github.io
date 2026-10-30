@@ -268,6 +268,16 @@ class TestHero(unittest.TestCase):
         self.assertEqual(len(d.find_all("button", class_="video-close", aria_label="Close video")), 1)
 
 
+    def test_newsletter_modal(self):
+        trigger = page().by_id("portfolio").find_all("a", class_="social-card--newsletter")[0]
+        self.assertEqual(trigger.attrs.get("data-modal"), "newsletter-modal")
+        dialogs = page().find_all("dialog", id="newsletter-modal")
+        self.assertEqual(len(dialogs), 1)
+        imgs = dialogs[0].find_all("img")
+        self.assertEqual(len(imgs), 1)
+        self.assertTrue(imgs[0].attrs.get("alt"))
+        self.assertTrue(exists_exact(imgs[0].attrs["src"]))
+
     def test_cards_modal(self):
         trigger = page().by_id("portfolio").find_all("a", class_="social-card--print")[0]
         self.assertEqual(trigger.attrs.get("data-modal"), "cards-modal")
