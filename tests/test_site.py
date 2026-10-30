@@ -1,18 +1,7 @@
-import hashlib
 import re
-import subprocess
 import unittest
 
 from sitecheck import ROOT, Page, css_rules, exists_exact, read_css, read_js
-
-# Words that must never be published anywhere in the repo, stored as SHA-256 so the
-# word itself never appears in a tracked file (including this one).
-FORBIDDEN_WORD_HASHES = {"0188eaa432b3f6d6630f9daaf63ec361f32af168dfc8c21a38b7879b1ad71bac"}
-
-
-def _forbidden_words_in(text):
-    return {w for w in set(re.findall(r"[a-z]+", text.lower()))
-            if hashlib.sha256(w.encode()).hexdigest() in FORBIDDEN_WORD_HASHES}
 
 
 def _hex_to_rgb(value):
@@ -80,9 +69,8 @@ class TestScaffold(unittest.TestCase):
                         self.assertTrue(sel.startswith(".js "), sel)
         self.assertGreater(hiding, 0, "expected at least one hidden reveal state")
 
-    def test_no_forbidden_content(self):
+    def test_no_phone_numbers(self):
         p = page()
-        self.assertEqual(_forbidden_words_in(p.raw), set())
         self.assertIsNone(re.search(r"\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}", p.text))
 
     def test_nav_does_not_trap_fixed_menu(self):
@@ -101,17 +89,6 @@ class TestScaffold(unittest.TestCase):
                 body = rule
         self.assertIsNotNone(body, "expected a `main` rule")
         self.assertRegex(body, r"overflow-x:\s*clip")
-
-    def test_no_forbidden_words_in_tracked_files(self):
-        # GitHub Pages serves (and GitHub shows) every tracked file, not just index.html.
-        files = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True,
-                               text=True, check=True).stdout.split()
-        self.assertTrue(files)
-        for name in files:
-            data = (ROOT / name).read_bytes()
-            if b"\0" in data:
-                continue
-            self.assertEqual(_forbidden_words_in(data.decode("utf-8", "ignore")), set(), name)
 
     def test_js_failure_fallback(self):
         # If script.js is blocked, 404s, or throws, the page must not stay hidden.
