@@ -917,7 +917,7 @@ body.menu-open { overflow: hidden; }
 a.sermon-card { text-decoration: none; }
 .sermon-card__thumb { position: relative; display: block; margin-bottom: 12px; border-bottom: var(--border); }
 .sermon-card__thumb img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-.sermon-card__play {
+.sermon-card__play, .social-card__play {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -932,7 +932,7 @@ a.sermon-card { text-decoration: none; }
   box-shadow: 4px 4px 0 var(--ruby);
   transition: transform .2s steps(2);
 }
-.sermon-card__play svg { width: 14px; height: auto; margin-left: 3px; }
+.sermon-card__play svg, .social-card__play svg { width: 14px; height: auto; margin-left: 3px; }
 .sermon-card__title { padding: 0 18px; font-weight: 700; font-size: 1.25rem; line-height: 1.2; }
 .sermon-card__series { padding: 0 18px; font-family: var(--font-pixel); font-size: .66rem; text-transform: uppercase; color: var(--emerald); }
 
@@ -961,9 +961,9 @@ a.sermon-card { text-decoration: none; }
   color: var(--gold);
   border: 3px solid var(--night);
 }
-.social-card__screen svg { width: 30px; height: auto; margin-left: 6px; }
+.social-card__screen > svg { width: 30px; height: auto; margin-left: 6px; }
 /* The newsletter tile shows the top of the email itself */
-.social-card__screen--image { overflow: hidden; }
+.social-card__screen--image { position: relative; overflow: hidden; }
 .social-card__screen--image img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
 .social-card--print .social-card__screen--image img { object-position: center; }
 .social-card__caption { font-size: 1.15rem; font-weight: 700; }
@@ -1335,7 +1335,7 @@ a.sermon-card { text-decoration: none; }
 .heart-card:active, .timeline-card:active, .work-card:active, .sermon-card:active, .social-card:active { scale: .96; }
 @media (hover: hover) {
   .heart-card:hover, .timeline-card:hover, .work-card:hover, .sermon-card:hover, .social-card:hover { translate: 0 -6px; }
-  .sermon-card:hover .sermon-card__play { transform: scale(1.15) rotate(-8deg); }
+  .sermon-card:hover .sermon-card__play, .social-card:hover .social-card__play { transform: scale(1.15) rotate(-8deg); }
 }
 
 /* ==========================================================================
