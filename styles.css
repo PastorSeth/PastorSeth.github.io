@@ -862,6 +862,22 @@ body.menu-open { overflow: hidden; }
 }
 .btn--app__arrow { display: inline-block; font-family: var(--font-body); font-size: 1.3rem; line-height: 1; transition: transform .3s steps(3); }
 .btn--app:hover .btn--app__arrow, .btn--app:focus-visible .btn--app__arrow { transform: translate(4px, -4px); }
+/* A small "still building" note under the app button */
+.app-spotlight__note {
+  max-width: 40ch;
+  margin: 30px 0 0;
+  padding: 10px 14px;
+  font-size: .92rem;
+  line-height: 1.5;
+  border-left: 4px dashed var(--gold);
+}
+.app-spotlight__note-label {
+  margin-right: 4px;
+  font-family: var(--font-pixel);
+  font-size: .7rem;
+  text-transform: uppercase;
+  color: var(--gold);
+}
 
 /* Sermons */
 .portfolio__subhead { margin: 72px 0 8px; }
@@ -1176,6 +1192,7 @@ body.menu-open { overflow: hidden; }
 .js [data-reveal="stamps"].is-visible > :nth-child(5) { animation-delay: .48s; }
 .js [data-reveal="lines"].is-visible > :nth-child(6),
 .js [data-reveal="stamps"].is-visible > :nth-child(6) { animation-delay: .6s; }
+.js [data-reveal="lines"].is-visible > :nth-child(7) { animation-delay: .72s; }
 .js [data-reveal="lines"].is-visible > .app-spotlight__sticker { animation: rv-stamp .5s var(--bounce) .75s backwards, sticker 2.4s steps(2) 1.3s infinite; }
 
 /* Single lines of text: typed on */
