@@ -339,16 +339,10 @@ class TestExperience(unittest.TestCase):
         self.assertIn("Parenting with Purpose", self.cards[0].text)
         self.assertIn("Encounter WKND", self.cards[0].text)
 
-    def test_work_cards(self):
-        work = page().by_id("experience").find_all(class_="work-card")
-        expected = [("Peacock Insurance", "Jan 2025 – Present"),
-                    ("All American Chimney Service", "Jan 2022 – May 2023"),
-                    ("Chick-fil-A", "May 2021 – Jan 2022"),
-                    ("UPS", "Oct 2019 – May 2021")]
-        self.assertEqual(len(work), len(expected))
-        for card, (company, dates) in zip(work, expected):
-            self.assertIn(company, card.text)
-            self.assertIn(dates, card.text)
+    def test_no_work_section(self):
+        exp = page().by_id("experience")
+        self.assertEqual(exp.find_all(class_="work-card"), [])
+        self.assertNotIn("Work that shaped me", exp.text)
 
     def test_education(self):
         edu = [c.text for c in page().by_id("experience").find_all(class_="edu-card")]

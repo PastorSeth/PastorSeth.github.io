@@ -672,23 +672,6 @@ body.menu-open { overflow: hidden; }
 .timeline-card li::marker { color: var(--gold); }
 
 .experience__subhead { margin: 72px 0 12px; }
-.experience__note { max-width: 46ch; opacity: .9; }
-
-.work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
-.work-card {
-  padding: 16px 14px;
-  background: var(--gold);
-  color: var(--night);
-  border: var(--border);
-  box-shadow: 4px 4px 0 var(--ruby);
-}
-.work-card:nth-child(2) { background: var(--emerald); box-shadow: 4px 4px 0 var(--sapphire); }
-.work-card:nth-child(3) { background: var(--ruby); box-shadow: 4px 4px 0 var(--gold); }
-.work-card:nth-child(4) { background: var(--cream); box-shadow: 4px 4px 0 var(--violet); }
-.work-card p { margin: 0; line-height: 1.25; }
-.work-card__title { margin-bottom: 4px !important; font-weight: 700; font-size: 1.05rem; }
-.work-card__company { font-weight: 500; font-size: .9rem; }
-.work-card__dates { margin-top: 8px !important; font-family: var(--font-pixel); font-size: .62rem; text-transform: uppercase; }
 
 .edu-grid { display: grid; gap: 20px; margin-top: 24px; }
 .edu-card {
@@ -734,9 +717,6 @@ body.menu-open { overflow: hidden; }
   .timeline-card:nth-of-type(even) .timeline-card__dot { left: -62px; }
   .timeline-card:nth-of-type(odd) .timeline-card__dot { left: auto; right: -62px; }
   .edu-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (min-width: 1024px) {
-  .work-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* ==========================================================================
@@ -1214,9 +1194,6 @@ a.sermon-card { text-decoration: none; }
 .js .timeline-card.is-visible li:nth-child(2) { animation-delay: .65s; }
 .js .timeline-card.is-visible li:nth-child(3) { animation-delay: .8s; }
 
-/* Work cards: dealt onto the table, each from its own angle */
-.js [data-reveal="deal"].is-visible { animation: rv-deal .65s cubic-bezier(.2,1.3,.4,1) var(--delay, 0s) backwards; }
-
 /* Education: the card unrolls, then the award is stamped on */
 .js [data-reveal="unlock"] { transform-origin: top; }
 .js [data-reveal="unlock"].is-visible { animation: rv-unlock .6s steps(5) var(--delay, 0s) backwards; }
@@ -1296,11 +1273,6 @@ a.sermon-card { text-decoration: none; }
   60% { transform: rotate(45deg) scale(1.7); }
   100% { transform: rotate(45deg) scale(1); }
 }
-@keyframes rv-deal {
-  0% { opacity: 0; transform: translate(var(--dx, 0px), 140px) rotate(var(--rot, -15deg)) scale(.75); }
-  70% { opacity: 1; transform: translate(0, -8px) rotate(calc(var(--rot, -15deg) * -.15)); }
-  100% { opacity: 1; transform: none; }
-}
 @keyframes rv-unlock { 0% { opacity: 0; transform: scaleY(0); } 45% { opacity: 1; transform: scaleY(1.05); } 100% { opacity: 1; transform: none; } }
 @keyframes rv-beam {
   0% { opacity: 0; transform: scaleY(0); }
@@ -1328,13 +1300,13 @@ a.sermon-card { text-decoration: none; }
 @keyframes rv-rise { from { opacity: 0; transform: translateY(44px); } to { opacity: 1; transform: none; } }
 
 /* Press + hover feedback on cards. Uses scale/translate so it never fights the reveal's transform. */
-.heart-card, .timeline-card, .work-card, .sermon-card, .social-card {
+.heart-card, .timeline-card, .sermon-card, .social-card {
   transition: scale .08s steps(1), translate .3s steps(3);
   -webkit-tap-highlight-color: transparent;
 }
-.heart-card:active, .timeline-card:active, .work-card:active, .sermon-card:active, .social-card:active { scale: .96; }
+.heart-card:active, .timeline-card:active, .sermon-card:active, .social-card:active { scale: .96; }
 @media (hover: hover) {
-  .heart-card:hover, .timeline-card:hover, .work-card:hover, .sermon-card:hover, .social-card:hover { translate: 0 -6px; }
+  .heart-card:hover, .timeline-card:hover, .sermon-card:hover, .social-card:hover { translate: 0 -6px; }
   .sermon-card:hover .sermon-card__play, .social-card:hover .social-card__play { transform: scale(1.15) rotate(-8deg); }
 }
 
