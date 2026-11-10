@@ -667,6 +667,7 @@ body.menu-open { overflow: hidden; }
 }
 .timeline-card h3 { margin-bottom: .2em; font-size: 1.5rem; }
 .timeline-card__place { margin-bottom: .7em; font-weight: 700; line-height: 1.35; color: var(--emerald); }
+.timeline-card__summary { margin: 0 0 .8em; line-height: 1.45; }
 .timeline-card ul { margin: 0; padding-left: 1.1em; list-style: square; }
 .timeline-card li { margin-bottom: .45em; }
 .timeline-card li::marker { color: var(--gold); }
