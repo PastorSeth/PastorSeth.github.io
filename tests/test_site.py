@@ -333,7 +333,7 @@ class TestExperience(unittest.TestCase):
                   "Southern Baptist Theological Seminary", "Cottage Hill Baptist Church"]
         for card, place in zip(self.cards, places):
             self.assertIn(place, card.text)
-            self.assertIn(len(card.find_all("li")), (2, 3), place)
+            self.assertIn(len(card.find_all("li")), (2, 3, 4), place)
 
     def test_parkway_highlights(self):
         self.assertIn("Parenting with Purpose", self.cards[0].text)

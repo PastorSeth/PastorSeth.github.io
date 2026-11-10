@@ -1193,6 +1193,7 @@ a.sermon-card { text-decoration: none; }
 .js .timeline-card.is-visible li { animation: rv-type .4s steps(4) .5s backwards; }
 .js .timeline-card.is-visible li:nth-child(2) { animation-delay: .65s; }
 .js .timeline-card.is-visible li:nth-child(3) { animation-delay: .8s; }
+.js .timeline-card.is-visible li:nth-child(4) { animation-delay: .95s; }
 
 /* Education: the card unrolls, then the award is stamped on */
 .js [data-reveal="unlock"] { transform-origin: top; }
