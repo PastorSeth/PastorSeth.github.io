@@ -322,14 +322,14 @@ class TestExperience(unittest.TestCase):
 
     def test_ministry_roles(self):
         self.assertEqual([c.find_all("h3")[0].text for c in self.cards], [
-            "Student Pastor", "Ministry Resident",
+            "Student Pastor",
             "Full Time Seminary Student", "Director of Worship Media",
         ])
         self.assertEqual([c.find_all(class_="dates")[0].text for c in self.cards], [
-            "Feb 2024 – Aug 2025", "Aug 2023 – Feb 2024",
+            "Feb 2024 – Aug 2025",
             "Jan 2020 – May 2024", "Jul 2017 – Oct 2019",
         ])
-        places = ["Parkway Baptist Church", "Warren Baptist Church",
+        places = ["Parkway Baptist Church",
                   "Southern Baptist Theological Seminary", "Cottage Hill Baptist Church"]
         for card, place in zip(self.cards, places):
             self.assertIn(place, card.text)
@@ -355,7 +355,7 @@ class TestExperience(unittest.TestCase):
 
     def test_alternating_reveal(self):
         self.assertEqual([c.attrs.get("data-reveal") for c in self.cards],
-                         ["left", "right", "left", "right"])
+                         ["left", "right", "left"])
 
 
 class TestPortfolio(unittest.TestCase):
