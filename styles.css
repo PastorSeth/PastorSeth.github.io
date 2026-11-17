@@ -749,7 +749,7 @@ body.menu-open { overflow: hidden; }
 .phone {
   position: absolute;
   width: 190px;
-  aspect-ratio: 390 / 844;
+  aspect-ratio: 896 / 2000;
   padding: 8px;
   background: var(--deep);
   border: 4px solid var(--cream);

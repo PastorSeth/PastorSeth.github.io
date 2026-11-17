@@ -26,7 +26,7 @@ Open `index.html` and search for **`EDIT:`**. Every comment like this marks some
 Change the text or link right below each one. Things to swap in:
 
 - **Photo:** to change it, replace `images/seth.jpg` with a new square photo of the same name.
-- **App screenshots:** tall phone screenshots work best. Replace `images/app-1.svg` and `images/app-2.svg` the same way.
+- **App screenshots:** tall phone screenshots work best. Replace `images/app-1.webp` (front phone) and `images/app-2.webp` (back phone) the same way.
 - **App link:** change `https://example.com/your-app` to your app's real address. It already opens in a new tab.
 - **Sermon thumbnails and social post images:** replace the `sermon-*.svg` and `social-*.svg` files the same way.
 
